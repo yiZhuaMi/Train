@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import ttk
-import cv2
-from PIL import Image, ImageTk
 
 # 创建主窗口
 root = tk.Tk()
@@ -31,31 +29,20 @@ scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
 # 配置 Canvas 的 xview 方法
 canvas.configure(xscrollcommand=scrollbar.set)
 
-# 打开视频文件
-cap = cv2.VideoCapture('v1.mp4')
+# 创建一个 Frame 作为轨道图的容器
+track_frame = tk.Frame(canvas, borderwidth=2, relief="solid")  # 添加边框线
+canvas.create_window((0, 0), window=track_frame, anchor=tk.NW)
 
-# 读取第一帧
-ret, frame = cap.read()
-if ret:
-    # 将 OpenCV 图像转换为 PIL 图像
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    img = Image.fromarray(frame)
-    photo = ImageTk.PhotoImage(image=img)
+# 绑定滚动条事件
+def on_configure(event):
+    # 更新 Canvas 的滚动区域
+    canvas.configure(scrollregion=canvas.bbox("all"))
 
-    # 创建一个 Frame 作为视频的容器
-    video_frame = tk.Frame(canvas, borderwidth=2, relief="solid")  # 添加边框线
-    video_label = tk.Label(video_frame, image=photo)
-    video_label.image = photo
-    video_label.pack()
+track_frame.bind("<Configure>", on_configure)
 
-    canvas.create_window((0, 0), window=video_frame, anchor=tk.NW)
-
-    # 绑定滚动条事件
-    def on_configure(event):
-        # 更新 Canvas 的滚动区域
-        canvas.configure(scrollregion=canvas.bbox("all"))
-
-    video_frame.bind("<Configure>", on_configure)
+# 为轨道图容器添加一些内容，确保有足够的宽度触发滚动
+for i in range(50):
+    tk.Label(track_frame, text=f"Item {i}").pack(side=tk.LEFT, padx=10)
 
 # 创建左下模块（输出）的函数
 def create_left_bottom_module(parent_frame, width):
@@ -112,6 +99,3 @@ create_right_bottom_module(bottom_frame)
 
 # 运行主循环
 root.mainloop()
-
-# 释放视频捕获对象
-cap.release()
