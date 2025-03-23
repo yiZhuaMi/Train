@@ -1,0 +1,22 @@
+[
+    {
+        "type": "TRAIN_NUM",
+        "left": 111,
+        "top": 185
+    },
+    {
+        "type": "TRAIN_NUM",
+        "left": 180,
+        "top": 271
+    },
+    {
+        "type": "LIGHT",
+        "left": 752,
+        "top": 212
+    },
+    {
+        "type": "RAIL_LINE",
+        "left": 475,
+        "top": 220
+    }
+]
