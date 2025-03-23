@@ -16,19 +16,19 @@ class Box:
         return self.top
     # 获取框最底坐标
     def get_bottom(self):
-        if self.type == consts.BoxType.TRAIN_NUM:
+        if self.type == consts.TargetType.TRAIN_NUM:
             return self.top + consts.BOX_H_TRAIN_NUM
-        elif self.type == consts.BoxType.LIGHT:
+        elif self.type == consts.TargetType.LIGHT:
             return self.top + consts.BOX_H_LIGHT
-        elif self.type == consts.BoxType.RAIL_LINE:
+        elif self.type == consts.TargetType.RAIL_LINE:
             return self.top + consts.BOX_H_RAIL_LINE
      # 获取框最右坐标
     def get_right(self):
-        if self.type == consts.BoxType.TRAIN_NUM:
+        if self.type == consts.TargetType.TRAIN_NUM:
             return self.left + consts.BOX_W_TRAIN_NUM
-        elif self.type == consts.BoxType.LIGHT:
+        elif self.type == consts.TargetType.LIGHT:
             return self.left + consts.BOX_W_LIGHT
-        elif self.type == consts.BoxType.RAIL_LINE:
+        elif self.type == consts.TargetType.RAIL_LINE:
             return self.left + consts.BOX_W_RAIL_LINE
         
 def read_boxes_from_config(config_path):
@@ -39,11 +39,11 @@ def read_boxes_from_config(config_path):
         for box_data in boxes_data:
             # 将配置文件中的类型字符串转换为对应的枚举值
             if box_data["type"] == "TRAIN_NUM":
-                box_type = consts.BoxType.TRAIN_NUM
+                box_type = consts.TargetType.TRAIN_NUM
             elif box_data["type"] == "LIGHT":
-                box_type = consts.BoxType.LIGHT
+                box_type = consts.TargetType.LIGHT
             elif box_data["type"] == "RAIL_LINE":
-                box_type = consts.BoxType.RAIL_LINE
+                box_type = consts.TargetType.RAIL_LINE
             else:
                 print(f"未知的框类型: {box_data['type']}，跳过该框")
                 continue

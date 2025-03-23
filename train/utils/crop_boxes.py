@@ -1,6 +1,6 @@
 from PIL import Image
 from module.box import Box
-import cv2
+from module.croped_image import CroppedImage
 import numpy as np
 
 def crop_boxes_from_image(image, boxes):
@@ -13,11 +13,13 @@ def crop_boxes_from_image(image, boxes):
             right = box.get_right()
             bottom = box.get_bottom()
             # 使用 numpy 切片进行截取
-            cropped_image = image[top:bottom, left:right]
+            cropped_image = CroppedImage(image[top:bottom, left:right], 
+                                         box.type)
             cropped_images.append(cropped_image)
     else:
         # 保留原有的 PIL.Image 处理逻辑
         for box in boxes:
-            cropped_image = image.crop((box.get_left(), box.get_top(), box.get_right(), box.get_bottom()))
+            cropped_image = CroppedImage(image.crop((box.get_left(), box.get_top(), box.get_right(), box.get_bottom())), 
+                                         box.type)
             cropped_images.append(cropped_image)
     return cropped_images

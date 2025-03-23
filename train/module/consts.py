@@ -1,7 +1,7 @@
 from enum import Enum
 
-# 框类型
-class BoxType(Enum):
+# 目标类型
+class TargetType(Enum):
     TRAIN_NUM = 1
     LIGHT = 2
     RAIL_LINE = 3
