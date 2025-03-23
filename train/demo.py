@@ -1,5 +1,6 @@
 from utils.crop_boxes import crop_boxes_from_image
 from module.box import read_boxes_from_config
+from module.croped_image import CroppedImage
 from utils.draw_boxes import draw_boxes
 from PIL import Image
 import cv2
@@ -20,8 +21,8 @@ if __name__ == "__main__":
             cropped_images = crop_boxes_from_image(frame, boxes)
             # 打开新窗口显示框中的内容
             for i, cropped_img in enumerate(cropped_images):
-                if cropped_img.size != 0:
-                    cv2.imshow(f"ROI {i + 1}", cropped_img)
+                if cropped_img.image.size != 0:
+                    cv2.imshow(f"{cropped_img.target_type} {i + 1}", cropped_img.image)
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
