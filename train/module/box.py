@@ -3,7 +3,8 @@ from module import consts
 
 # 定义一个框类，用于存放框的类型、最顶坐标、最左坐标
 class Box:
-    def __init__(self, type, left, top):
+    def __init__(self, name, type, left, top):
+        self.name = name
         self.type = type
         self.left = left
         self.top = top
@@ -46,7 +47,7 @@ def read_boxes_from_config(config_path):
             else:
                 print(f"未知的框类型: {box_data['type']}，跳过该框")
                 continue
-            box = Box(box_type, box_data["left"], box_data["top"])
+            box = Box(box_data["name"], box_type, int(box_data["left"]), int(box_data["top"]))
             boxes.append(box)
         return boxes
     except FileNotFoundError:

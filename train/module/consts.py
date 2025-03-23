@@ -15,6 +15,6 @@ BOX_W_RAIL_LINE = 10
 BOX_H_RAIL_LINE = 10
 
 # 框属性定义
-BOX_COLOR = "#00f6ff"
+BOX_COLOR = "#00f6ff" #十六进制颜色
 BOX_WIDTH = 2
 

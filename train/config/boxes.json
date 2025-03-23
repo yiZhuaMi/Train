@@ -1,22 +1,38 @@
 [
     {
+        "name": "taolin_num_left_1",
         "type": "TRAIN_NUM",
-        "left": 111,
-        "top": 185
+        "left": 1190,
+        "top": 1089
     },
     {
+        "name": "taolin_num_left_1",
         "type": "TRAIN_NUM",
-        "left": 180,
-        "top": 271
+        "left": 1190,
+        "top": 1149
     },
     {
+        "name": "taolin_light_left_1",
         "type": "LIGHT",
-        "left": 752,
-        "top": 212
+        "left": 1461,
+        "top": 1099
     },
     {
-        "type": "RAIL_LINE",
-        "left": 475,
-        "top": 220
+        "name": "taolin_light_left_2",
+        "type": "LIGHT",
+        "left": 1461,
+        "top": 1119
+    },
+    {
+        "name": "taolin_light_left_3",
+        "type": "LIGHT",
+        "left": 1461,
+        "top": 1139
+    },
+    {
+        "name": "taolin_light_left_4",
+        "type": "LIGHT",
+        "left": 1461,
+        "top": 1159
     }
 ]

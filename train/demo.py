@@ -1,21 +1,29 @@
-from utils.image_crop import crop_boxes, crop_boxes
+from utils.crop_boxes import crop_boxes_from_image
 from module.box import read_boxes_from_config
-from utils.image_draw import draw_boxes
+from utils.draw_boxes import draw_boxes
 from PIL import Image
+import cv2
+from utils.window_capture import WindowCapture
 
 if __name__ == "__main__":
-    # 打开图像
-    try:
-        input_path = "resources/WX20250323.png"
-        image = Image.open(input_path)
-    except FileNotFoundError:
-        print(f"错误: 未找到文件{input_path}")
-    except Exception as e:
-        print(f"错误: 发生了一个未知错误: {e}")    
-
     # 读取框信息
     boxes = read_boxes_from_config("config/boxes.json")
-    # 截取框
-    crop_boxes(image, boxes)
-    # 绘制框
-    draw_boxes(image, boxes)
+
+    capturer = WindowCapture("桌面控制 152 576 447 9")
+    
+    while True:
+        frame = capturer.get_frame()
+        if frame is not None:            
+            # 按给定的 box 进行画框
+            cv2.imshow("Window with Boxes", draw_boxes(frame, boxes))
+            # 对框中的内容进行截取
+            cropped_images = crop_boxes_from_image(frame, boxes)
+            # 打开新窗口显示框中的内容
+            for i, cropped_img in enumerate(cropped_images):
+                if cropped_img.size != 0:
+                    cv2.imshow(f"ROI {i + 1}", cropped_img)
+        
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    
+    cv2.destroyAllWindows()
