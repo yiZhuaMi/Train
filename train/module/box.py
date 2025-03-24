@@ -1,13 +1,15 @@
 import json
+from config import config
 from module import consts
 
-# 定义一个框类，用于存放框的类型、最顶坐标、最左坐标
+# 定义一个框类，用于存放框的名称、类型、最左坐标、最顶坐标、识别结果
 class Box:
-    def __init__(self, name, type, left, top):
+    def __init__(self, name, type, left, top, result=''):
         self.name = name
         self.type = type
         self.left = left
         self.top = top
+        self.result = result
     # 获取框最左坐标
     def get_left(self):
         return self.left
@@ -30,6 +32,9 @@ class Box:
             return self.left + consts.BOX_W_LIGHT
         elif self.type == consts.TargetType.RAIL_LINE:
             return self.left + consts.BOX_W_RAIL_LINE
+    # 获取框的识别结果
+    def get_result(self):
+        return self.result
         
 def read_boxes_from_config(config_path):
     try:
@@ -47,7 +52,10 @@ def read_boxes_from_config(config_path):
             else:
                 print(f"未知的框类型: {box_data['type']}，跳过该框")
                 continue
-            box = Box(box_data["name"], box_type, int(box_data["left"]), int(box_data["top"]))
+            box = Box(box_data["name"], 
+                      box_type,
+                      int(box_data["left"]+config.BOX_OFFSET_left), 
+                      int(box_data["top"]+config.BOX_OFFSET_top))
             boxes.append(box)
         return boxes
     except FileNotFoundError:

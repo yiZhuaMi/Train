@@ -1,16 +1,26 @@
+from config import config
+from utils import ocr
 from utils.crop_boxes import crop_boxes_from_image
 from module.box import read_boxes_from_config
 from module.croped_image import CroppedImage
 from utils.draw_boxes import draw_boxes
-from PIL import Image
 import cv2
 from utils.window_capture import WindowCapture
 
+def recognize(img):
+    if img.type is CroppedImage.TYPE_TRAIN_NUMBER: 
+        # 识别
+        text = ocr.ocr(img.image, cls=True)
+        
+        res=f"box:{img.box.name} 识别结果:{text}"
+        print(res)
+        cv2.imshow(f"{res}", img.image)
+
 if __name__ == "__main__":
     # 读取框信息
-    boxes = read_boxes_from_config("config/boxes.json")
+    boxes = read_boxes_from_config(config.BOX_CONFIG_PATH)
 
-    capturer = WindowCapture("桌面控制 152 576 447 9")
+    capturer = WindowCapture(config.CAPTURE_WINDOW_NAME)
     
     while True:
         frame = capturer.get_frame()
@@ -19,10 +29,12 @@ if __name__ == "__main__":
             cv2.imshow("Window with Boxes", draw_boxes(frame, boxes))
             # 对框中的内容进行截取
             cropped_images = crop_boxes_from_image(frame, boxes)
-            # 打开新窗口显示框中的内容
+            # 遍历截取的图像
             for i, cropped_img in enumerate(cropped_images):
-                if cropped_img.image.size != 0:
-                    cv2.imshow(f"{cropped_img.target_type} {i + 1}", cropped_img.image)
+                if cropped_img.image.size == 0:
+                    continue
+                # 识别
+                recognize(cropped_img)
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
