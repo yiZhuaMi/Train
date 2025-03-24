@@ -132,7 +132,7 @@ class WindowCapture:
         img = np.frombuffer(bmp_str, dtype=np.uint8).reshape(
             (bmp_info["bmHeight"], bmp_info["bmWidth"], 4))
         # 修改颜色转换代码
-        img = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
+        img = cv2.cvtColor(img, cv2.COLOR_RGBA2RGB)
         
         # 清理资源
         self.win32gui.DeleteObject(save_bitmap.GetHandle())

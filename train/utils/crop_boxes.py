@@ -13,8 +13,7 @@ def crop_boxes_from_image(image, boxes):
             right = box.get_right()
             bottom = box.get_bottom()
             # 使用 numpy 切片进行截取
-            cropped_image = CroppedImage(image[top:bottom, left:right], 
-                                         box.type)
+            cropped_image = CroppedImage(box, image[top:bottom, left:right])
             cropped_images.append(cropped_image)
     else:
         # 保留原有的 PIL.Image 处理逻辑
