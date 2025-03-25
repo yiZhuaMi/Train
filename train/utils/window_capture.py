@@ -30,7 +30,8 @@ class WindowCapture:
         self.win32gui = win32gui
         
         # 获取窗口句柄
-        self.hwnd = self._get_win_window_handle()
+        # self.hwnd = self._get_win_window_handle()
+        self.hwnd = win32gui.FindWindow(None, self.window_name)
         if not self.hwnd:
             raise Exception(f"Window '{self.window_name}' not found")
 
@@ -107,11 +108,13 @@ class WindowCapture:
         """Windows捕获实现"""
         import win32ui
         import win32con
-        
+        from train.config import config
+
+
         # 获取窗口位置
         left, top, right, bottom = self.win32gui.GetClientRect(self.hwnd)
-        w = right - left
-        h = bottom - top
+        w = int((right - left) * config.WIN_WINDOW_SCALE_W)
+        h = int((bottom - top) * config.WIN_WINDOW_SCALE_H)
 
         # 创建设备上下文
         hwnd_dc = self.win32gui.GetWindowDC(self.hwnd)
@@ -124,7 +127,7 @@ class WindowCapture:
         save_dc.SelectObject(save_bitmap)
         
         # 复制画面
-        save_dc.BitBlt((0, 0), (w, h), mfc_dc, (left, top), win32con.SRCCOPY)
+        save_dc.BitBlt((0, 0), (w, h), mfc_dc, (0, 0), win32con.SRCCOPY)
         
         # 转换为OpenCV格式
         bmp_info = save_bitmap.GetInfo()

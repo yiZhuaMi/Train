@@ -1,26 +1,40 @@
 from config import config
 from utils import ocr
+from utils import light_color
 from utils.crop_boxes import crop_boxes_from_image
 from module.box import read_boxes_from_config
 from module.consts import TargetType
 from utils.draw_boxes import draw_boxes
 import cv2
 from utils.window_capture import WindowCapture
+import sys
 
 def recognize(img):
-    # 识别
-    text = ocr.recognize_train_number(img.image)
-    
-    res=f"box:{img.box.name} 识别结果:{text}"
-    # print(res)
-    if text is not None:
-        cv2.imshow(f"{res}", img.image)
+    if img.box.type == TargetType.TRAIN_NUM:
+        # 识别
+        text = ocr.recognize_train_number(img.image)
+
+        res=f"box:{img.box.name} 识别结果:{text}"
+        # print(res)
+        if text is not None:
+            cv2.imshow(f"{res}", img.image)
+    elif img.box.type == TargetType.LIGHT:
+        result = light_color.detect_signal_color(img.image)
+        res = f"box:{img.box.name} 识别结果:{result}"
+        if result is not None:
+            cv2.imshow(f"{res}", img.image)
 
 if __name__ == "__main__":
     # 读取框信息
     boxes = read_boxes_from_config(config.BOX_CONFIG_PATH)
 
-    capturer = WindowCapture(config.CAPTURE_WINDOW_NAME)
+    window_name = None
+    if sys.platform.startswith("win"):
+        window_name = config.CAPTURE_WIN_WINDOW_NAME
+    elif sys.platform.startswith("darwin"):
+        window_name = config.CAPTURE_MAC_WINDOW_NAME
+
+    capturer = WindowCapture(window_name)
     
     while True:
         frame = capturer.get_frame()
