@@ -4,7 +4,7 @@ BOX_CONFIG_PATH = "config/boxes.json"
 CAPTURE_WINDOW_NAME = "桌面控制 152 576 447 9"
 
 # box坐标配置偏移
-BOX_OFFSET_left = 730
-BOX_OFFSET_top = 85
+BOX_OFFSET_left = 0
+BOX_OFFSET_top = 0
 # box尺寸缩放比例
-BOX_SCALE = 1.01
+BOX_SCALE = 1

@@ -6,7 +6,7 @@ import random
 ocr = PaddleOCR(use_angle_cls=True, lang='ch', use_gpu=False)  # CPU/GPU 均可
 
 def recognize_train_number(image):
-
+    # 1. 预处理图像
     # random_number = random.randint(1, 1000000)
     # cv2.imshow(str(random_number), image)
 

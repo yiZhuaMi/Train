@@ -4,6 +4,9 @@ from module.croped_image import CroppedImage
 import numpy as np
 
 def crop_boxes_from_image(image, boxes):
+    """
+    从图像中截取多个框，并返回截取后的图像列表。
+    """
     cropped_images = []
     # 检查 image 是否为 numpy.ndarray 类型
     if isinstance(image, np.ndarray):

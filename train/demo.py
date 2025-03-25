@@ -8,7 +8,9 @@ import cv2
 from utils.window_capture import WindowCapture
 
 def recognize(img):
-    # 识别
+    """
+    识别
+    """
     text = ocr.recognize_train_number(img.image)
     
     res=f"box:{img.box.name} 识别结果:{text}"
