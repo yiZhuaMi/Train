@@ -1,5 +1,11 @@
 [
     {
+        "name": "test",
+        "type": "TEST",
+        "left": 1470,
+        "top": 1001
+    },
+    {
         "name": "taolin_num_left_1",
         "type": "TRAIN_NUM",
         "left": 1190,

@@ -8,13 +8,13 @@ import cv2
 from utils.window_capture import WindowCapture
 
 def recognize(img):
-    if img.box.type is TargetType.TRAIN_NUM:
-        # 识别
-        text = ocr.ocr(img.image, cls=True)
-        
-        res=f"box:{img.box.name} 识别结果:{text}"
-        print(res)
-        # cv2.imshow(f"{res}", img.image)
+    # 识别
+    text = ocr.recognize_train_number(img.image)
+    
+    res=f"box:{img.box.name} 识别结果:{text}"
+    # print(res)
+    if text is not None:
+        cv2.imshow(f"{res}", img.image)
 
 if __name__ == "__main__":
     # 读取框信息
