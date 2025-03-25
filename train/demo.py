@@ -10,6 +10,10 @@ from utils.window_capture import WindowCapture
 import sys
 
 def recognize(img):
+    """
+    识别
+    """
+
     if img.box.type == TargetType.TRAIN_NUM:
         # 识别
         text = ocr.recognize_train_number(img.image)

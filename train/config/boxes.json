@@ -2,43 +2,43 @@
     {
         "name": "test",
         "type": "TEST",
-        "left": 1470,
-        "top": 1001
+        "left": 2212,
+        "top": 1089
     },
     {
         "name": "taolin_num_left_1",
         "type": "TRAIN_NUM",
-        "left": 1190,
-        "top": 1089
+        "left": 1940,
+        "top": 1170
     },
     {
         "name": "taolin_num_left_2",
         "type": "TRAIN_NUM",
-        "left": 1190,
-        "top": 1149
+        "left": 1940,
+        "top": 1236
     },
     {
         "name": "taolin_light_left_1",
         "type": "LIGHT",
-        "left": 1461,
-        "top": 1099
+        "left": 2192,
+        "top": 1174
     },
     {
         "name": "taolin_light_left_2",
         "type": "LIGHT",
-        "left": 1461,
-        "top": 1119
+        "left": 2192,
+        "top": 1201
     },
     {
         "name": "taolin_light_left_3",
         "type": "LIGHT",
-        "left": 1461,
-        "top": 1139
+        "left": 2192,
+        "top": 1226
     },
     {
         "name": "taolin_light_left_4",
         "type": "LIGHT",
-        "left": 1461,
-        "top": 1159
+        "left": 2192,
+        "top": 1252
     }
 ]

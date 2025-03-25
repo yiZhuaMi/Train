@@ -1,5 +1,3 @@
-import sys
-
 # box配置文件路径
 BOX_CONFIG_PATH = "config/boxes.json"
 # 要捕获的窗口标题
@@ -9,10 +7,10 @@ CAPTURE_MAC_WINDOW_NAME =  "桌面控制 152 576 447 9"
 CAPTURE_WIN_WINDOW_NAME =  "152 576 447 9"
 
 # box坐标配置偏移
-BOX_OFFSET_left = 730
-BOX_OFFSET_top = 85
+BOX_OFFSET_left = 0
+BOX_OFFSET_top = 0
 # box尺寸缩放比例
-BOX_SCALE = 1.01
+BOX_SCALE = 1
 
 # 定义颜色范围 (HSV)
 COLOR_RANGES = {
