@@ -16,7 +16,7 @@ def recognize(img):
 
     if img.box.type == TargetType.TRAIN_NUM:
         # 识别
-        text = ocr.recognize_train_number(img.image)
+        text = ocr.recognize_train_number_old(img.image)
 
         res=f"box:{img.box.name} 识别结果:{text}"
         # print(res)
