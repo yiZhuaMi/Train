@@ -1,5 +1,7 @@
 resources/*
 !resources/
+output/*
+!output/
 __pycache__/
-.DS_Store
-personal_token.txt
+*.DS_Store
+*personal_token.txt

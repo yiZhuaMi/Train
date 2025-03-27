@@ -73,18 +73,13 @@ def recognize_train_number(image):
     result = ocr.ocr(gray, cls=True)
     # 检查 result 是否为空
     if isinstance(result, list) and len(result) == 1 and result[0] is None:
-        return [], []
-    else:
-        texts = []
-        confidences = []
-        for line in result:
-            # 提取识别出的文本
-            text = line[0][1][0]
-            texts.append(text)
-            # 提取识别结果的置信度
-            confidence = line[0][1][1]
-            confidences.append(confidence)
-        return texts, confidences
+        return "", 0
+    
+    # 只取第一个识别结果
+    line = result[0]
+    text = line[0][1][0]
+    confidence = line[0][1][1]
+    return text, confidence
 
 if __name__ == '__main__':
     # 运行检测
