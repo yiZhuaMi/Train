@@ -7,17 +7,50 @@ import logging
 # 设置日志级别为 ERROR，过滤掉 INFO 和 WARNING 日志
 logging.getLogger("ppocr").setLevel(logging.ERROR)
 # 初始化 OCR（启用方向分类和轻量级模型）
-ocr = PaddleOCR(use_angle_cls=True, lang='ch', use_gpu=False)  # CPU/GPU 均可
+ocr = PaddleOCR(use_angle_cls=True, lang='en', use_gpu=False)  # CPU/GPU 均可
 
+def recognize_and_crop(image):
+    image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    # 进行 OCR 识别
+    results = ocr.ocr(image, cls=True)
 
-def find_vertical_divide(binary_img):
-    """通过垂直投影找到背景分界线"""
-    # 统计每列白色像素数量
-    col_white = np.sum(binary_img == 255, axis=0)
-    # 找到变化最剧烈的位置
-    diff = np.abs(np.diff(col_white))
-    divide_pos = np.argmax(diff) + 1  # 补偿差分偏移
-    return divide_pos
+    extracted_text = []
+
+    # 遍历 OCR 识别结果
+    for idx, line in enumerate(results):
+        for word_info in line:
+            bbox, (text, confidence) = word_info[0], word_info[1]
+            x_min, y_min = int(bbox[0][0]), int(bbox[0][1])
+            x_max, y_max = int(bbox[2][0]), int(bbox[2][1])
+
+            # 截取文字区域
+            cropped_img = image[y_min:y_max, x_min:x_max]
+            recognize_split_text(cropped_img)
+            cv2.imshow(text, cropped_img)
+            cv2.imshow(f"origin_{text}", image)
+
+            # 记录识别结果
+            extracted_text.append(text)
+            print(f"识别文字: {text}, 置信度: {confidence:.2f}")
+
+    return extracted_text
+
+def find_vertical_divide(binary_img, window_size=5):
+    # 计算灰度直方图
+    hist = cv2.calcHist([binary_img], [0], None, [256], [0, 256])
+
+    # 找到黑色和白色的主峰（去掉低频干扰）
+    main_colors = np.argsort(hist.ravel())[-2:]  # 选两个出现最多的灰度值
+
+    # 计算每列接近哪个主色
+    col_mean = np.mean(binary_img, axis=0)
+    color_diff = np.abs(col_mean - main_colors[0]) - np.abs(col_mean - main_colors[1])
+
+    # 找到变化最大的地方
+    diff = np.abs(np.diff(color_diff))
+    boundary_col = np.argmax(diff)
+
+    return boundary_col
 
 
 def recognize_split_text(image):
@@ -33,8 +66,6 @@ def recognize_split_text(image):
     right = binary[:, divide_x:]
 
     cv2.imshow(f"binary", binary)
-    cv2.imshow(f"left", left)
-    cv2.imshow(f"right", right)
 
     print(ocr.ocr(binary, cls=True))
     # 4. 自适应颜色处理
@@ -56,6 +87,8 @@ def recognize_split_text(image):
             texts = [line[0][1][0] for line in result]
             print(f"{pos} side found:", texts)
             all_texts.extend(texts)
+
+        cv2.imshow(f"side_{pos}_{all_texts}", side)
 
     return all_texts
 
@@ -90,6 +123,6 @@ if __name__ == '__main__':
             file_path = os.path.join(root, file)
             img = cv2.imread(file_path)
             print(file_path)
-            print(recognize_split_text(img))
+            print(recognize_and_crop(img))
 
     cv2.waitKey(0)
