@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from train.config import config
+from config import config
 
 
 def detect_signal_color(image):

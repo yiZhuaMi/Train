@@ -1,3 +1,4 @@
+import time
 from config import config
 from utils import ocr
 from utils import light_color
@@ -13,20 +14,20 @@ def recognize(img):
     """
     识别
     """
-
-    if img.box.type == TargetType.TRAIN_NUM:
+    if img.box.type == TargetType.TRAIN_NUM or img.box.type == TargetType.TEST:
         # 识别
-        text = ocr.recognize_train_number(img.image)
+        text, confidence = ocr.recognize_train_number(img.image)
+        res=f"box:{img.box.name} 识别结果:{text} 置信度:{confidence}"
+        if text is not None and len(text) > 0:
+            print(res)
 
-        res=f"box:{img.box.name} 识别结果:{text}"
-        # print(res)
-        if text is not None:
-            cv2.imshow(f"{res}", img.image)
     elif img.box.type == TargetType.LIGHT:
         result = light_color.detect_signal_color(img.image)
         res = f"box:{img.box.name} 识别结果:{result}"
-        if result is not None:
-            cv2.imshow(f"{res}", img.image)
+        if result is not None and len(result) > 0:
+            print(res)
+
+    # 返回map，key：name，value：识别结果
 
 if __name__ == "__main__":
     # 读取框信息
@@ -56,5 +57,6 @@ if __name__ == "__main__":
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        # time.sleep(60)
     
     cv2.destroyAllWindows()
