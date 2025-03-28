@@ -15,6 +15,7 @@ def recognize(img):
     识别
     返回识别结果的字符串
     """
+    result = None
     if img.box.type == TargetType.TRAIN_NUM or img.box.type == TargetType.TEST:
         result, confidence = ocr.recognize_train_number(img.image)
     elif img.box.type == TargetType.LIGHT:
@@ -40,8 +41,6 @@ if __name__ == "__main__":
     while True:
         frame = capturer.get_frame()
         if frame is not None:            
-            # 按给定的 box 进行画框
-            cv2.imshow("Window with Boxes", draw_boxes(frame, boxes))
             # 对框中的内容进行截取
             cropped_images = crop_boxes_from_image(frame, boxes)
             frame_result = {}  # 用于存储当前帧的所有结果
@@ -59,6 +58,9 @@ if __name__ == "__main__":
 
             print("当前帧的识别结果:", frame_result)
             write_to_excel(config.RESULT_PATH, frame_result)
+
+            # 按给定的 box 进行画框
+            cv2.imshow("Window with Boxes", draw_boxes(frame, boxes))
                     
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

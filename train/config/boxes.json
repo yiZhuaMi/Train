@@ -28,5 +28,41 @@
         "type": "LIGHT",
         "left": 1745,
         "top": 1067
+    },
+    {
+        "name": "taolin_line_1",
+        "type": "RAIL_LINE",
+        "left": 1900,
+        "top": 1065
+    },
+    {
+        "name": "yueyangbei_num_1",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 847
+    },
+    {
+        "name": "yueyangbei_num_2",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 869
+    },
+    {
+        "name": "yueyangbei_num_3",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 889
+    },
+    {
+        "name": "yueyangbei_num_4",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 907
+    },
+    {
+        "name": "yueyangbei_num_5",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 925
     }
 ]
