@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-from train.config import config
-
+from module import consts
 
 def detect_signal_color(image):
     """
@@ -18,7 +17,7 @@ def detect_signal_color(image):
     color_scores = {}
 
     # 检测每种颜色并计算加权得分
-    for color, (lower, upper) in config.COLOR_RANGES.items():
+    for color, (lower, upper) in consts.COLOR_RANGES.items():
         lower_bound = np.array(lower)
         upper_bound = np.array(upper)
         mask = cv2.inRange(hsv, lower_bound, upper_bound)
@@ -49,12 +48,7 @@ def detect_signal_color(image):
 
     dominant_color = max(color_scores, key=color_scores.get)
 
-    detected_color = None
-    for color_name in config.LIGHT_COLOR_NAMES:
-        if color_name in dominant_color:
-            detected_color = color_name
-            break
-    return detected_color
+    return dominant_color.name, color_scores[dominant_color]
 
 
 if __name__ == '__main__':

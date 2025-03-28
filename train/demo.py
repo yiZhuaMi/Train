@@ -8,25 +8,22 @@ from utils.draw_boxes import draw_boxes
 import cv2
 from utils.window_capture import WindowCapture
 import sys
+from utils.write_result import write_to_excel
 
 def recognize(img):
     """
     识别
+    返回识别结果的字符串
     """
-
-    if img.box.type == TargetType.TRAIN_NUM:
-        # 识别
-        text = ocr.recognize_train_number_old(img.image)
-
-        res=f"box:{img.box.name} 识别结果:{text}"
-        # print(res)
-        if text is not None:
-            cv2.imshow(f"{res}", img.image)
+    if img.box.type == TargetType.TRAIN_NUM or img.box.type == TargetType.TEST:
+        result, confidence = ocr.recognize_train_number(img.image)
     elif img.box.type == TargetType.LIGHT:
-        result = light_color.detect_signal_color(img.image)
-        res = f"box:{img.box.name} 识别结果:{result}"
-        if result is not None:
-            cv2.imshow(f"{res}", img.image)
+        result, confidence = light_color.detect_signal_color(img.image)
+
+    if result is not None and len(result) > 0:
+        # print(f"box:{img.box.name} 识别结果:{result} 置信度:{confidence}")
+        return result
+    return ""
 
 if __name__ == "__main__":
     # 读取框信息
@@ -47,14 +44,24 @@ if __name__ == "__main__":
             cv2.imshow("Window with Boxes", draw_boxes(frame, boxes))
             # 对框中的内容进行截取
             cropped_images = crop_boxes_from_image(frame, boxes)
+            frame_result = {}  # 用于存储当前帧的所有结果
             # 遍历截取的图像
-            for i, cropped_img in enumerate(cropped_images):
+            for cropped_img in cropped_images:
                 if cropped_img.image.size == 0:
                     continue
                 # 识别
-                recognize(cropped_img)
-        
+                result = recognize(cropped_img)
+                # 将结果存入 frame_result 字典
+                frame_result[cropped_img.box.name] = {
+                    "result_text":result,
+                    "image":cropped_img.image
+                    }
+
+            print("当前帧的识别结果:", frame_result)
+            write_to_excel(config.RESULT_PATH, frame_result)
+                    
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        # time.sleep(60)
     
     cv2.destroyAllWindows()
