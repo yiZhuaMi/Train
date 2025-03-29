@@ -29,9 +29,24 @@ class LightColor(Enum):
     RED_2 = 4
 
 # 定义颜色范围 (HSV)
-COLOR_RANGES = {
+SIGNAL_COLOR_RANGES = {
     LightColor.RED: [(0, 100, 100), (10, 255, 255)],  # 红色范围1
     LightColor.RED_2: [(160, 100, 100), (180, 255, 255)],  # 红色范围2
     LightColor.GREEN: [(35, 100, 100), (85, 255, 255)],  # 绿色范围
     LightColor.WHITE: [(0, 0, 200), (180, 50, 255)]  # 白色范围
+}
+
+# 轨道线颜色
+class RailLineColor(Enum):
+    RED = 1
+    WHITE = 2
+    RED_2 = 3
+    GRAY = 4
+
+# 定义颜色范围 (HSV)
+RAIL_LINE_COLOR_RANGES = {
+    RailLineColor.RED: [(0, 100, 100), (10, 255, 255)],  # 红色范围1
+    RailLineColor.RED_2: [(160, 100, 100), (180, 255, 255)],  # 红色范围2
+    RailLineColor.WHITE: [(0, 0, 200), (180, 30, 255)],  # 白色范围
+    RailLineColor.GRAY: [(0, 0, 50), (180, 50, 200)]  # 灰色范围
 }

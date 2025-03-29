@@ -4,17 +4,99 @@ import numpy as np
 import random
 import logging
 
+
 # 设置日志级别为 ERROR，过滤掉 INFO 和 WARNING 日志
 logging.getLogger("ppocr").setLevel(logging.ERROR)
 # 初始化 OCR（启用方向分类和轻量级模型）
 ocr = PaddleOCR(use_angle_cls=True, lang='en', use_gpu=False)  # CPU/GPU 均可
 
-def recognize_and_crop(image):
+
+class TrainNumRecognizeResult:
+    def __init__(self, all_num:str, all_num_conf:str, train_num:str, train_num_conf:str):
+        self.all_num = all_num                  #车牌上的所有字符
+        self.all_num_conf = all_num_conf        #所有字符的识别置信度
+        self.train_num = train_num              #车牌上的车次号
+        self.train_num_conf = train_num_conf    #车次号的识别置信度
+
+        if ' ' in self.train_num:
+            self.train_num = max(self.train_num.split(' '), key=len)
+
+        self.time_diff = ''                     #车牌上的晚点时差
+        if len(self.all_num) != len(self.train_num):
+            index = self.all_num.find(self.train_num)
+            if index != -1:
+                self.time_diff = (self.all_num[:index] + self.all_num[index + len(self.train_num):]).strip()
+        else:
+            self.all_num = self.all_num if self.all_num_conf > self.train_num_conf else self.train_num
+            self.all_num_conf = self.all_num_conf if self.all_num_conf > self.train_num_conf else self.train_num_conf
+            self.train_num = self.train_num if self.train_num_conf > self.all_num_conf else self.all_num
+            self.train_num_conf = self.train_num_conf if self.train_num_conf > self.all_num_conf else self.all_num_conf
+
+
+    def __str__(self):
+        return f"TrainNumRecognizeResult(all_num:{self.all_num}, all_num_conf:{self.all_num_conf}, train_num:{self.train_num}, train_num_conf:{self.train_num_conf}, time_diff:{self.time_diff})"
+
+
+def extract_text_from_white_bg(image):
+    # 扩大图像
+    image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    # 读取图像
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # 二值化：让白色背景变白，黑色文字保持
+    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # cv2.imshow(f"binary", binary)
+
+    # **形态学腐蚀**（断开薄弱连接）
+    # erosion_size = 3
+    # kernel = np.ones((erosion_size, erosion_size), np.uint8)
+    # eroded = cv2.erode(binary, kernel, iterations=1)
+
+    # 进行连通区域分析
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(binary, connectivity=8)
+
+    # 找到面积最大的白色簇（跳过背景）
+    largest_label = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
+
+    # 创建新图像，只保留最大簇
+    largest_cluster = np.zeros_like(binary)
+    largest_cluster[labels == largest_label] = 255  # 仅保留最大簇
+
+    # cv2.imshow(f"largest_cluster", largest_cluster)
+
+    # 创建掩码：只保留白色背景部分
+    # mask = cv2.inRange(binary, 230, 255)
+    # cv2.imshow(f"mask", mask)
+
+    # 过滤掉非白色背景的区域
+    # filtered_image = cv2.bitwise_and(binary, binary, mask=mask)
+    #
+    # cv2.imshow(f"filtered_image", filtered_image)
+
+    # 使用 PaddleOCR 进行识别
+    result = ocr.ocr(largest_cluster, cls=True)
+
+    # 输出识别结果
+    for line in result:
+        if line is None:
+            return None, None
+
+        for word_info in line:
+            text, confidence = word_info[1][0], word_info[1][1]
+            # print(f"识别到: {text} (置信度: {confidence})")
+            return text, confidence
+
+    return None, None
+
+
+def recognize_train_number(image):
+    # 扩大图像
     image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
     # 进行 OCR 识别
     results = ocr.ocr(image, cls=True)
 
-    extracted_text = []
+    # extracted_text = []
 
     # 遍历 OCR 识别结果
     for idx, line in enumerate(results):
@@ -25,74 +107,23 @@ def recognize_and_crop(image):
 
             # 截取文字区域
             cropped_img = image[y_min:y_max, x_min:x_max]
-            recognize_split_text(cropped_img)
-            cv2.imshow(text, cropped_img)
-            cv2.imshow(f"origin_{text}", image)
+            train_num, train_num_conf = extract_text_from_white_bg(cropped_img)
+
+            if train_num is None:
+                return None
+
+            # cv2.imshow(text, cropped_img)
+            # cv2.imshow(f"origin_{text}", image)
 
             # 记录识别结果
-            extracted_text.append(text)
-            print(f"识别文字: {text}, 置信度: {confidence:.2f}")
+            # extracted_text.append(text)
+            # print(f"识别文字: {text}, 置信度: {confidence:.2f}")
+            return TrainNumRecognizeResult(text, confidence, train_num, train_num_conf)
 
-    return extracted_text
-
-def find_vertical_divide(binary_img, window_size=5):
-    # 计算灰度直方图
-    hist = cv2.calcHist([binary_img], [0], None, [256], [0, 256])
-
-    # 找到黑色和白色的主峰（去掉低频干扰）
-    main_colors = np.argsort(hist.ravel())[-2:]  # 选两个出现最多的灰度值
-
-    # 计算每列接近哪个主色
-    col_mean = np.mean(binary_img, axis=0)
-    color_diff = np.abs(col_mean - main_colors[0]) - np.abs(col_mean - main_colors[1])
-
-    # 找到变化最大的地方
-    diff = np.abs(np.diff(color_diff))
-    boundary_col = np.argmax(diff)
-
-    return boundary_col
+    return None
 
 
-def recognize_split_text(image):
-    # 1. 灰度化+二值化
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-
-    # 2. 动态查找分界线
-    divide_x = find_vertical_divide(binary)
-
-    # 3. 分割左右区域
-    left = binary[:, :divide_x]
-    right = binary[:, divide_x:]
-
-    cv2.imshow(f"binary", binary)
-
-    print(ocr.ocr(binary, cls=True))
-    # 4. 自适应颜色处理
-    def process_side(side):
-        # 自动判断是否需要颜色反转
-        if np.mean(side) > 127:  # 背景偏白
-            side = cv2.bitwise_not(side)
-        return side
-
-    right = process_side(right)
-    # 5. 分别识别
-    all_texts = []
-    for side, pos in [(left, "left"), (right, "right")]:
-        processed = process_side(side)
-        cv2.imshow(f"processed_{pos}", processed)
-        result = ocr.ocr(side, cls=True)
-        print(result)
-        if result and result[0]:
-            texts = [line[0][1][0] for line in result]
-            print(f"{pos} side found:", texts)
-            all_texts.extend(texts)
-
-        cv2.imshow(f"side_{pos}_{all_texts}", side)
-
-    return all_texts
-
-def recognize_train_number(image):
+def recognize_train_number_old(image):
     # 1. 预处理图像
     # random_number = random.randint(1, 1000000)
     # cv2.imshow(str(random_number), image)
@@ -123,6 +154,6 @@ if __name__ == '__main__':
             file_path = os.path.join(root, file)
             img = cv2.imread(file_path)
             print(file_path)
-            print(recognize_and_crop(img))
+            print(recognize_train_number(img))
 
     cv2.waitKey(0)
