@@ -38,6 +38,28 @@ class TrainNumRecognizeResult:
         return f"TrainNumRecognizeResult(all_num:{self.all_num}, all_num_conf:{self.all_num_conf}, train_num:{self.train_num}, train_num_conf:{self.train_num_conf}, time_diff:{self.time_diff})"
 
 
+def resize_with_opencv(image, scale_factor=2.0):
+    """
+    使用OpenCV插值放大图片
+    :param image: 输入图片
+    :param scale_factor: 放大倍数（例如2.0表示放大2倍）
+    :return: 放大后的图像
+    """
+
+    # 计算新尺寸
+    width = int(image.shape[1] * scale_factor)
+    height = int(image.shape[0] * scale_factor)
+    new_size = (width, height)
+
+    # 选择插值方法（推荐INTER_CUBIC或INTER_LINEAR）
+    resized_img = cv2.resize(
+        image,
+        new_size,
+        interpolation=cv2.INTER_CUBIC  # 其他选项：INTER_LINEAR, INTER_NEAREST, INTER_LANCZOS4
+    )
+
+    return resized_img
+
 def extract_text_from_white_bg(image):
     # 扩大图像
     image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
@@ -96,6 +118,7 @@ def has_chinese(text):
     return bool(pattern.search(text))
 
 def recognize_train_number(image):
+    image = resize_with_opencv(image)
     # 扩大图像
     image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
     # 进行 OCR 识别
