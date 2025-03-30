@@ -10,8 +10,8 @@ class TargetType(Enum):
 # 框尺寸定义
 BOX_W_TEST = 100
 BOX_H_TEST = 30
-BOX_W_TRAIN_NUM = 125
-BOX_H_TRAIN_NUM = 23
+BOX_W_TRAIN_NUM = 90
+BOX_H_TRAIN_NUM = 20
 BOX_W_LIGHT = 15
 BOX_H_LIGHT = 15
 BOX_W_RAIL_LINE = 10
@@ -45,8 +45,7 @@ class RailLineColor(Enum):
 
 # 定义颜色范围 (HSV)
 RAIL_LINE_COLOR_RANGES = {
-    RailLineColor.RED: [(0, 100, 100), (10, 255, 255)],  # 红色范围1
-    RailLineColor.RED_2: [(160, 100, 100), (180, 255, 255)],  # 红色范围2
-    RailLineColor.WHITE: [(0, 0, 200), (180, 30, 255)],  # 白色范围
-    RailLineColor.GRAY: [(0, 0, 50), (180, 50, 200)]  # 灰色范围
+    RailLineColor.RED: [(0, 190, 110), (10, 230, 150)],  # 红色范围1
+    RailLineColor.WHITE: [(80, 10, 210), (90, 20, 255)],  # 白色范围
+    RailLineColor.GRAY: [(0, 80, 80), (180, 115, 110)]  # 灰色范围
 }
