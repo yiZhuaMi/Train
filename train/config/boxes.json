@@ -33,7 +33,13 @@
         "name": "taolin_line_1",
         "type": "RAIL_LINE",
         "left": 1900,
-        "top": 1065
+        "top": 1064
+    },
+    {
+        "name": "taolin_line_2",
+        "type": "RAIL_LINE",
+        "left": 1810,
+        "top": 1064
     },
     {
         "name": "yueyangbei_num_1",
@@ -64,5 +70,65 @@
         "type": "TRAIN_NUM",
         "left": 1169,
         "top": 925
+    },
+    {
+        "name": "yueyangbei_num_6",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 944
+    },
+    {
+        "name": "yueyangbei_num_7",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 963
+    },
+    {
+        "name": "yueyangbei_num_8",
+        "type": "TRAIN_NUM",
+        "left": 1169,
+        "top": 983
+    },
+    {
+        "name": "pingtian_line_1",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 539
+    },
+    {
+        "name": "pingtian_line_2",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 556
+    },
+    {
+        "name": "pingtian_line_3",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 575
+    },
+    {
+        "name": "pingtian_line_4",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 597
+    },
+    {
+        "name": "pingtian_line_5",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 615
+    },
+    {
+        "name": "pingtian_line_6",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 635
+    },
+    {
+        "name": "pingtian_line_7",
+        "type": "RAIL_LINE",
+        "left": 1110,
+        "top": 656
     }
 ]

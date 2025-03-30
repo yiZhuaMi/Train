@@ -11,8 +11,8 @@ CAPTURE_MAC_WINDOW_NAME =  "桌面控制 152 576 447 9"
 CAPTURE_WIN_WINDOW_NAME =  "152 576 447 9"
 
 # box坐标配置偏移
-BOX_OFFSET_left = -13
-BOX_OFFSET_top = -11
+BOX_OFFSET_left = 0
+BOX_OFFSET_top = 0
 # box尺寸缩放比例
 BOX_SCALE = 1
 

@@ -96,10 +96,18 @@ def recognize_train_number(image):
     # 进行 OCR 识别
     results = ocr.ocr(image, cls=True)
 
-    # extracted_text = []
+    # 检查 results 是否为 None 或者空列表
+    if results is None or len(results) == 0:
+        return None
 
     # 遍历 OCR 识别结果
     for idx, line in enumerate(results):
+        # 再次检查 line 是否为 None
+        if line is None:
+            continue
+        # 检查 line 是否可迭代
+        if not isinstance(line, (list, tuple)):
+            continue
         for word_info in line:
             bbox, (text, confidence) = word_info[0], word_info[1]
             x_min, y_min = int(bbox[0][0]), int(bbox[0][1])
