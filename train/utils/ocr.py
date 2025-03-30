@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import random
 import logging
+import re
 
 
 # 设置日志级别为 ERROR，过滤掉 INFO 和 WARNING 日志
@@ -90,6 +91,10 @@ def extract_text_from_white_bg(image):
     return None, None
 
 
+def has_chinese(text):
+    pattern = re.compile(r'[\u4e00-\u9fa5]')  # 中文字符的Unicode范围
+    return bool(pattern.search(text))
+
 def recognize_train_number(image):
     # 扩大图像
     image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
@@ -112,6 +117,9 @@ def recognize_train_number(image):
             bbox, (text, confidence) = word_info[0], word_info[1]
             x_min, y_min = int(bbox[0][0]), int(bbox[0][1])
             x_max, y_max = int(bbox[2][0]), int(bbox[2][1])
+
+            if has_chinese(text):
+                return TrainNumRecognizeResult(text, confidence, text, confidence)
 
             # 截取文字区域
             cropped_img = image[y_min:y_max, x_min:x_max]
