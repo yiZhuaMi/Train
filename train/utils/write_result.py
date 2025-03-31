@@ -24,7 +24,7 @@ def write_to_excel(file_path, frame_result):
         if is_same_with_last_row(ws, frame_result):
             return
     else:
-        wb = Workbook()
+        wb = openpyxl.Workbook()
         ws = wb.active
         # 创建固定表头
         headers = ["时间"]
