@@ -60,58 +60,6 @@ def resize_with_opencv(image, scale_factor=2.0):
 
     return resized_img
 
-def extract_text_from_white_bg(image):
-    # 扩大图像
-    image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
-    # 读取图像
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    # 二值化：让白色背景变白，黑色文字保持
-    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-    # cv2.imshow(f"binary", binary)
-
-    # **形态学腐蚀**（断开薄弱连接）
-    # erosion_size = 3
-    # kernel = np.ones((erosion_size, erosion_size), np.uint8)
-    # eroded = cv2.erode(binary, kernel, iterations=1)
-
-    # 进行连通区域分析
-    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(binary, connectivity=8)
-
-    # 找到面积最大的白色簇（跳过背景）
-    largest_label = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
-
-    # 创建新图像，只保留最大簇
-    largest_cluster = np.zeros_like(binary)
-    largest_cluster[labels == largest_label] = 255  # 仅保留最大簇
-
-    # cv2.imshow(f"largest_cluster", largest_cluster)
-
-    # 创建掩码：只保留白色背景部分
-    # mask = cv2.inRange(binary, 230, 255)
-    # cv2.imshow(f"mask", mask)
-
-    # 过滤掉非白色背景的区域
-    # filtered_image = cv2.bitwise_and(binary, binary, mask=mask)
-    #
-    # cv2.imshow(f"filtered_image", filtered_image)
-
-    # 使用 PaddleOCR 进行识别
-    result = ocr.ocr(largest_cluster, cls=True)
-
-    # 输出识别结果
-    for line in result:
-        if line is None:
-            return None, None
-
-        for word_info in line:
-            text, confidence = word_info[1][0], word_info[1][1]
-            # print(f"识别到: {text} (置信度: {confidence})")
-            return text, confidence
-
-    return None, None
-
 
 def has_chinese(text):
     pattern = re.compile(r'[\u4e00-\u9fa5]')  # 中文字符的Unicode范围
@@ -126,23 +74,8 @@ def clean_string(text):
 
 def recognize_train_number(image):
     image = resize_with_opencv(image)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # 二值化：让白色背景变白，黑色文字保持
-    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-    # 进行连通区域分析
-    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(binary, connectivity=8)
-
-    # 找到面积最大的白色簇（跳过背景）
-    largest_label = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
-
-    # 创建新图像，只保留最大簇
-    largest_cluster = np.zeros_like(binary)
-    largest_cluster[labels == largest_label] = 255  # 仅保留最大簇
-
-
-    image_to_reg = largest_cluster
+    image_to_reg = image
     # 进行第一次 OCR 识别
     results = ocr.ocr(image, det=False, cls=False)
     if results is None or len(results) == 0:
@@ -183,27 +116,6 @@ def recognize_train_number(image):
     return None
 
 
-def recognize_train_number_old(image):
-    # 1. 预处理图像
-    # random_number = random.randint(1, 1000000)
-    # cv2.imshow(str(random_number), image)
-
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # 灰度化
-    # cv2.imshow(str(random_number+1), gray)
-    _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)  # 二值化（根据实际调整阈值）
-    # cv2.imshow(str(random_number+2), thresh)
-
-    # 2. OCR 识别
-    result = ocr.ocr(gray, cls=True)
-    # 检查 result 是否为空
-    if isinstance(result, list) and len(result) == 1 and result[0] is None:
-        return "", 0
-    
-    # 只取第一个识别结果
-    line = result[0]
-    text = line[0][1][0]
-    confidence = line[0][1][1]
-    return text, confidence
 
 if __name__ == '__main__':
     # 运行检测
