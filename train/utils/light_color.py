@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from module import consts
+from train.module import consts
 
 def detect_main_color(image, color_range:dict):
     """
