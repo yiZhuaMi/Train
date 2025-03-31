@@ -17,10 +17,7 @@ def recognize(img):
     """
     result = None
     if img.box.type == TargetType.TRAIN_NUM or img.box.type == TargetType.TEST:
-        train_num_recognize_result = ocr.recognize_train_number(img.image)
-        if train_num_recognize_result is not None:
-            result = train_num_recognize_result.train_num
-            confidence = train_num_recognize_result.train_num_conf
+        result, confidence = ocr.recognize_train_number(img.image)
     elif img.box.type == TargetType.LIGHT:
         result, confidence = light_color.detect_signal_color(img.image)
     elif img.box.type == TargetType.RAIL_LINE:

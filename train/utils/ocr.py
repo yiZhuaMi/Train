@@ -117,12 +117,52 @@ def has_chinese(text):
     pattern = re.compile(r'[\u4e00-\u9fa5]')  # 中文字符的Unicode范围
     return bool(pattern.search(text))
 
+def clean_string(text):
+    # 匹配汉字、字母、数字
+    pattern = re.compile(r'[^\u4e00-\u9fa5a-zA-Z0-9]')
+    # 替换所有非汉字、字母、数字的字符为空
+    cleaned_text = pattern.sub('', text)
+    return cleaned_text
+
 def recognize_train_number(image):
     image = resize_with_opencv(image)
-    # 扩大图像
-    image = cv2.copyMakeBorder(image, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # 二值化：让白色背景变白，黑色文字保持
+    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # 进行连通区域分析
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(binary, connectivity=8)
+
+    # 找到面积最大的白色簇（跳过背景）
+    largest_label = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
+
+    # 创建新图像，只保留最大簇
+    largest_cluster = np.zeros_like(binary)
+    largest_cluster[labels == largest_label] = 255  # 仅保留最大簇
+
+
+    image_to_reg = largest_cluster
+    # 进行第一次 OCR 识别
+    results = ocr.ocr(image, det=False, cls=False)
+    if results is None or len(results) == 0:
+        return None
+
+    # 遍历 OCR 识别结果
+    for idx, line in enumerate(results):
+        # 再次检查 line 是否为 None
+        if line is None:
+            continue
+        # 检查 line 是否可迭代
+        if not isinstance(line, (list, tuple)):
+            continue
+
+        for word_info in line:
+            if has_chinese(word_info[0]):
+                image_to_reg = image
+
     # 进行 OCR 识别
-    results = ocr.ocr(image, cls=True)
+    results = ocr.ocr(image_to_reg, det=False, cls=False)
 
     # 检查 results 是否为 None 或者空列表
     if results is None or len(results) == 0:
@@ -136,28 +176,9 @@ def recognize_train_number(image):
         # 检查 line 是否可迭代
         if not isinstance(line, (list, tuple)):
             continue
+
         for word_info in line:
-            bbox, (text, confidence) = word_info[0], word_info[1]
-            x_min, y_min = int(bbox[0][0]), int(bbox[0][1])
-            x_max, y_max = int(bbox[2][0]), int(bbox[2][1])
-
-            if has_chinese(text):
-                return TrainNumRecognizeResult(text, confidence, text, confidence)
-
-            # 截取文字区域
-            cropped_img = image[y_min:y_max, x_min:x_max]
-            train_num, train_num_conf = extract_text_from_white_bg(cropped_img)
-
-            if train_num is None:
-                return None
-
-            # cv2.imshow(text, cropped_img)
-            # cv2.imshow(f"origin_{text}", image)
-
-            # 记录识别结果
-            # extracted_text.append(text)
-            # print(f"识别文字: {text}, 置信度: {confidence:.2f}")
-            return TrainNumRecognizeResult(text, confidence, train_num, train_num_conf)
+            return clean_string(word_info[0]), word_info[1]
 
     return None
 
