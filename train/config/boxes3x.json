@@ -1,0 +1,50 @@
+[
+    {
+        "name": "yueyangbei_num_1",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 846
+    },
+    {
+        "name": "yueyangbei_num_2",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 870
+    },
+    {
+        "name": "yueyangbei_num_3",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 962
+    },
+    {
+        "name": "yueyangbei_num_4",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 986
+    },
+    {
+        "name": "yueyangbei_num_5",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 1010
+    },
+    {
+        "name": "yueyangbei_num_6",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 1055
+    },
+    {
+        "name": "yueyangbei_num_7",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 1100
+    },
+    {
+        "name": "yueyangbei_num_7",
+        "type": "TRAIN_NUM",
+        "left": 1370,
+        "top": 1100
+    }
+]
