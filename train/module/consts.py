@@ -80,7 +80,7 @@ class RailLineColor(Enum):
 
 # 定义颜色范围 (HSV)
 RAIL_LINE_COLOR_RANGES = {
-    RailLineColor.RED: [(0, 195, 1), (179, 255, 248)],  # 红色范围1
-    RailLineColor.WHITE: [(0, 0, 1), (60, 255, 253)],  # 白色范围
-    RailLineColor.GRAY: [(0, 38, 1), (150, 255, 132)]  # 灰色范围
+    RailLineColor.RED: [(0, 196, 1), (120, 255, 130)],  # 红色范围1
+    RailLineColor.WHITE: [(0, 0, 21), (0, 0, 190)],  # 白色范围
+    RailLineColor.GRAY: [(0, 80, 1), (118, 255, 108)]  # 灰色范围
 }

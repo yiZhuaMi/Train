@@ -4,6 +4,7 @@ import numpy as np
 import random
 import logging
 import re
+from train.config import config
 
 
 # 设置日志级别为 ERROR，过滤掉 INFO 和 WARNING 日志
@@ -72,10 +73,35 @@ def clean_string(text):
     cleaned_text = pattern.sub('', text)
     return cleaned_text
 
+def get_largest_white_region_bbox(image):
+    # 1. 图片转为灰度图
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # 2. 二值化处理（假设白色为目标，阈值根据实际情况调整）
+    _, binary = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
+
+    # 3. 查找轮廓
+    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    if not contours:
+        return None, None
+
+    # 4. 找到最大轮廓（白色像素最多的区域）
+    largest_contour = max(contours, key=cv2.contourArea)
+
+    # 5. 获取外包围框
+    x, y, w, h = cv2.boundingRect(largest_contour)
+    bbox = (x, y, x + w, y + h)  # 左上和右下坐标
+
+    cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    # 6. 截取外包围框区域
+    cropped = image[y:y + h, x:x + w]
+
+    return bbox, cropped
+
 def recognize_train_number(image):
     image = resize_with_opencv(image)
 
-    image_to_reg = image
     # 进行第一次 OCR 识别
     results = ocr.ocr(image, det=False, cls=False)
     if results is None or len(results) == 0:
@@ -92,10 +118,26 @@ def recognize_train_number(image):
 
         for word_info in line:
             if has_chinese(word_info[0]):
-                image_to_reg = image
+                return clean_string(word_info[0]), word_info[1]
+
+    bbox, cropped_image = get_largest_white_region_bbox(image)
+    # cv2.imshow(f"image", image)
+    # cv2.imshow(f"cropped_image", cropped_image)
+    # cv2.moveWindow("cropped_image", 500, 500)
+
+    if bbox is None:
+        return None
+
+    w = bbox[2] - bbox[0]
+    h = bbox[3] - bbox[1]
+    w_h_ratio = w / float(h)
+    # print(f'{results}: {w_h_ratio}')
+    if w_h_ratio < config.TRAIN_NUM_WIDTH_HEIGHT_RATIO_LOWER or w_h_ratio > config.TRAIN_NUM_WIDTH_HEIGHT_RATIO_UPPER:
+        return "车牌错误", 1.0
+
 
     # 进行 OCR 识别
-    results = ocr.ocr(image_to_reg, det=False, cls=False)
+    results = ocr.ocr(cropped_image, det=False, cls=False)
 
     # 检查 results 是否为 None 或者空列表
     if results is None or len(results) == 0:
@@ -128,4 +170,4 @@ if __name__ == '__main__':
             print(file_path)
             print(recognize_train_number(img))
 
-    cv2.waitKey(0)
+            cv2.waitKey(0)

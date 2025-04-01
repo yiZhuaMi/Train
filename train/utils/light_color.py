@@ -60,7 +60,7 @@ def detect_rail_line_color(image):
 if __name__ == '__main__':
     # 运行检测
     import os
-    directory = '../image/rail_line'
+    directory = '../image/rail_line_hsv'
     for root, dirs, files in os.walk(directory):
         for file in files:
             file_path = os.path.join(root, file)
