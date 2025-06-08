@@ -4,7 +4,7 @@ import numpy as np
 import random
 import logging
 import re
-from train.config import config
+from config import config
 
 
 # 设置日志级别为 ERROR，过滤掉 INFO 和 WARNING 日志
@@ -74,6 +74,11 @@ def clean_string(text):
     return cleaned_text
 
 def get_largest_white_region_bbox(image):
+    """
+    获取图片中最大的白色区域的外包围框
+    :param image: 输入的图像
+    :return: 外包围框的坐标 (x, y, x + w, y + h)"
+    """
     # 1. 图片转为灰度图
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -105,7 +110,7 @@ def recognize_train_number(image):
     # 进行第一次 OCR 识别
     results = ocr.ocr(image, det=False, cls=False)
     if results is None or len(results) == 0:
-        return None
+        return None, 0
 
     # 遍历 OCR 识别结果
     for idx, line in enumerate(results):
@@ -126,14 +131,15 @@ def recognize_train_number(image):
     # cv2.moveWindow("cropped_image", 500, 500)
 
     if bbox is None:
-        return None
+        return None, 0
 
+    # 检查宽高比是否符合车牌的宽高比范围
     w = bbox[2] - bbox[0]
     h = bbox[3] - bbox[1]
     w_h_ratio = w / float(h)
     # print(f'{results}: {w_h_ratio}')
     if w_h_ratio < config.TRAIN_NUM_WIDTH_HEIGHT_RATIO_LOWER or w_h_ratio > config.TRAIN_NUM_WIDTH_HEIGHT_RATIO_UPPER:
-        return "车牌错误", 1.0
+        return "车次号不完整", 0
 
 
     # 进行 OCR 识别
@@ -141,7 +147,7 @@ def recognize_train_number(image):
 
     # 检查 results 是否为 None 或者空列表
     if results is None or len(results) == 0:
-        return None
+        return None, 0
 
     # 遍历 OCR 识别结果
     for idx, line in enumerate(results):
@@ -155,7 +161,7 @@ def recognize_train_number(image):
         for word_info in line:
             return clean_string(word_info[0]), word_info[1]
 
-    return None
+        return None, 0
 
 
 
