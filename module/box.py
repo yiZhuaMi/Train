@@ -25,12 +25,11 @@ class Box:
     - top: 框的最顶坐标
     - result: 框的识别结果，默认为空字符串
     """
-    def __init__(self, name, type, left, top, reduce_times, result=''):
+    def __init__(self, name, type, left, top, result=''):
         self.name = name
         self.type = type
         self.left = left
         self.top = top
-        self.reduce_times = reduce_times
         self.result = result
 
     def get_left(self):
@@ -70,24 +69,11 @@ class Box:
         根据类型和缩放次数获取框的宽度
         """
         width_mapping = {
-            (consts.TargetType.TEST, consts.ReduceTimes.ONE): consts.BOX_W_TEST_1,
-            (consts.TargetType.TEST, consts.ReduceTimes.TWO): consts.BOX_W_TEST_2,
-            (consts.TargetType.TEST, consts.ReduceTimes.THREE): consts.BOX_W_TEST_3,
-            (consts.TargetType.TEST, consts.ReduceTimes.FOUR): consts.BOX_W_TEST_4,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.ONE): consts.BOX_W_TRAIN_NUM_1,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.TWO): consts.BOX_W_TRAIN_NUM_2,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.THREE): consts.BOX_W_TRAIN_NUM_3,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.FOUR): consts.BOX_W_TRAIN_NUM_4,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.ONE): consts.BOX_W_LIGHT_1,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.TWO): consts.BOX_W_LIGHT_2,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.THREE): consts.BOX_W_LIGHT_3,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.FOUR): consts.BOX_W_LIGHT_4,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.ONE): consts.BOX_W_RAIL_LINE_1,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.TWO): consts.BOX_W_RAIL_LINE_2,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.THREE): consts.BOX_W_RAIL_LINE_3,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.FOUR): consts.BOX_W_RAIL_LINE_4,
+            consts.TargetType.TRAIN_NUM: consts.BOX_W_TRAIN_NUM,
+            consts.TargetType.LIGHT: consts.BOX_W_LIGHT,
+            consts.TargetType.RAIL_LINE: consts.BOX_W_RAIL_LINE,
         }
-        box_width = width_mapping.get((self.type, self.reduce_times), 0)
+        box_width = width_mapping.get(self.type, 0)
         width = _get_scaled_len(box_width)
         return width
 
@@ -96,24 +82,11 @@ class Box:
         根据类型和缩放次数获取框的高度
         """
         height_mapping = {
-            (consts.TargetType.TEST, consts.ReduceTimes.ONE): consts.BOX_H_TEST_1,
-            (consts.TargetType.TEST, consts.ReduceTimes.TWO): consts.BOX_H_TEST_2,
-            (consts.TargetType.TEST, consts.ReduceTimes.THREE): consts.BOX_H_TEST_3,
-            (consts.TargetType.TEST, consts.ReduceTimes.FOUR): consts.BOX_H_TEST_4,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.ONE): consts.BOX_H_TRAIN_NUM_1,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.TWO): consts.BOX_H_TRAIN_NUM_2,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.THREE): consts.BOX_H_TRAIN_NUM_3,
-            (consts.TargetType.TRAIN_NUM, consts.ReduceTimes.FOUR): consts.BOX_H_TRAIN_NUM_4,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.ONE): consts.BOX_H_LIGHT_1,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.TWO): consts.BOX_H_LIGHT_2,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.THREE): consts.BOX_H_LIGHT_3,
-            (consts.TargetType.LIGHT, consts.ReduceTimes.FOUR): consts.BOX_H_LIGHT_4,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.ONE): consts.BOX_H_RAIL_LINE_1,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.TWO): consts.BOX_H_RAIL_LINE_2,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.THREE): consts.BOX_H_RAIL_LINE_3,
-            (consts.TargetType.RAIL_LINE, consts.ReduceTimes.FOUR): consts.BOX_H_RAIL_LINE_4,
+            consts.TargetType.TRAIN_NUM: consts.BOX_H_TRAIN_NUM,
+            consts.TargetType.LIGHT: consts.BOX_H_LIGHT,
+            consts.TargetType.RAIL_LINE: consts.BOX_H_RAIL_LINE,
         }
-        box_height = height_mapping.get((self.type, self.reduce_times), 0)
+        box_height = height_mapping.get(self.type, 0)
         height = _get_scaled_len(box_height)
         return height
 
@@ -142,8 +115,7 @@ def read_boxes_from_config(config_path):
             box = Box(box_data["name"], 
                       box_type,
                       _get_scaled_cordi(box_data["left"], config.BOX_OFFSET_left, config.BOX_ORIGIN_LEFT),
-                      _get_scaled_cordi(box_data["top"], config.BOX_OFFSET_top, config.BOX_ORIGIN_TOP),
-                      config.REDUCE_TIMES)
+                      _get_scaled_cordi(box_data["top"], config.BOX_OFFSET_top, config.BOX_ORIGIN_TOP))
             boxes.append(box)
         return boxes
     except FileNotFoundError:
