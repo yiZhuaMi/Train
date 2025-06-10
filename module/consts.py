@@ -15,6 +15,10 @@ class ReduceTimes(Enum):
     FOUR = 4
 
 # 框尺寸定义
+
+BOX_W_TRAIN_NUM = 120
+BOX_H_TRAIN_NUM = 70
+
 # 缩小4次
 BOX_W_TEST_4 = 100
 BOX_H_TEST_4 = 30

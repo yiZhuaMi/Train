@@ -22,12 +22,12 @@ def draw_boxes(image, boxes, color=consts.BOX_COLOR, width=consts.BOX_WIDTH):
         # 绘制矩形框
         draw.rectangle((left, top, right, bottom), outline=hex_to_rgb(color), width=width)
     
-    # 绘制缩放原点标记
-    origin_left = config.BOX_ORIGIN_LEFT
-    origin_top = config.BOX_ORIGIN_TOP
-    marker_size = 10  # 标记的大小
-    marker_color = (0, 0, 255)  # 标记的颜色，这里设置为红色
-    draw.rectangle((origin_left - marker_size, origin_top - marker_size, origin_left + marker_size, origin_top + marker_size), outline=marker_color, width=2)
+    # # 绘制缩放原点标记
+    # origin_left = 100
+    # origin_top = 100
+    # marker_size = 10  # 标记的大小
+    # marker_color = (0, 0, 255)  # 标记的颜色，这里设置为红色
+    # draw.rectangle((origin_left - marker_size, origin_top - marker_size, origin_left + marker_size, origin_top + marker_size), outline=marker_color, width=2)
 
     # 将 PIL.Image 对象转换回 numpy.ndarray
     image = np.array(image)

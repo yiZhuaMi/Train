@@ -10,7 +10,7 @@ from config import config
 # 设置日志级别为 ERROR，过滤掉 INFO 和 WARNING 日志
 logging.getLogger("ppocr").setLevel(logging.ERROR)
 # 初始化 OCR（启用方向分类和轻量级模型）
-ocr = PaddleOCR(use_angle_cls=True, lang='ch', use_gpu=False)  # CPU/GPU 均可
+ocr = PaddleOCR(use_angle_cls=True, lang='ch', use_gpu=True)  # CPU/GPU 均可
 
 
 class TrainNumRecognizeResult:
