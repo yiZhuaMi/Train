@@ -51,8 +51,20 @@ class ImageController:
         pen.setWidth(2)
         painter.setPen(pen)
 
-        for q_rect in annotated_image.train_num_annotations:
+        # 绘制矩形标注
+        for q_rect in annotated_image.rect_annotations:
             painter.drawRect(q_rect)
+
+        # 绘制圆圈标注
+        for circle_anno in annotated_image.circle_annotations:
+            painter.drawEllipse(circle_anno.get_origin(), circle_anno.get_radius(), circle_anno.get_radius())
+
+        # 绘制x标注
+        for cross_anno in annotated_image.cross_annotations:
+            center = cross_anno.get_center()
+            size = cross_anno.get_size()
+            painter.drawLine(center.x() - size, center.y() - size, center.x() + size, center.y() + size)
+            painter.drawLine(center.x() - size, center.y() + size, center.x() + size, center.y() - size)
 
         painter.end()
 

@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QToolBar, QWidget, QHBoxL
 from PyQt6.QtGui import QAction
 from PyQt6.QtCore import Qt, QTimer
 
-from image_window.annotated_image import AnnotatedImage, RectAnnotation
+from image_window.annotated_image import AnnotatedImage, RectAnnotation, CircleAnnotation, CrossAnnotation
 
 import os
 import cv2
@@ -62,11 +62,12 @@ class MainWindow(QMainWindow):
         image_path = os.path.join(self.image_folder, self.image_files[self.current_index])
         cv_image = cv2.imread(image_path)
         image_annotated = AnnotatedImage(cv_image)
-        image_annotated.add_train_num_annotations([RectAnnotation(500, 350, 50, 50)])
+        image_annotated.add_rect_annotations([RectAnnotation(500, 350, 50, 50)])
+        image_annotated.add_circle_annotations([CircleAnnotation(1000, 1000, 10)])
+        image_annotated.add_cross_annotations([CrossAnnotation(1200, 800, 10)])
         self._image_controller.load_annotated_image(image_annotated)
 
         self.current_index = (self.current_index + 1) % len(self.image_files)
-        print(image_path)
         self._warning_window_controller.append_warning(image_path)
 
     def run(self):
