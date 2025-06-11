@@ -62,7 +62,8 @@ class ImageController:
     def get_view(self) -> ImageView:
         return self.view
 
-def construct_image_controller() -> ImageController:
-    model = ImageModel()
-    view = ImageView()
-    return ImageController(model, view)
+
+_model = ImageModel()
+_view = ImageView()
+image_controller = ImageController(_model, _view)
+
