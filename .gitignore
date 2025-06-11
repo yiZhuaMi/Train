@@ -7,5 +7,6 @@ __pycache__/
 ../.DS_Store
 *personal_token.txt
 utils/*cpoy.py
+cap copy.py
 Dockerfile
 requirements.txt

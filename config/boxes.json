@@ -1,8 +1,50 @@
 [
     {
-        "name": "taolin_num_left_1",
+        "name": "section_chaling_zhaoliqiao_left_down",
         "type": "TRAIN_NUM",
         "left": 1130,
-        "top": 162
+        "top": 161
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_right_down",
+        "type": "TRAIN_NUM",
+        "left": 1254,
+        "top": 161
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_left_up",
+        "type": "TRAIN_NUM",
+        "left": 1130,
+        "top": 107
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_right_up",
+        "type": "TRAIN_NUM",
+        "left": 1254,
+        "top": 107
+    },
+    {
+        "name": "section_zhaoliqiao_yanglousi_left_down",
+        "type": "TRAIN_NUM",
+        "left": 1602,
+        "top": 161
+    },
+    {
+        "name": "section_zhaoliqiao_yanglousi_left_up",
+        "type": "TRAIN_NUM",
+        "left": 1602,
+        "top": 107
+    },
+    {
+        "name": "section_zhaoliqiao_yanglousi_right_down",
+        "type": "TRAIN_NUM",
+        "left": 1974,
+        "top": 161
+    },
+    {
+        "name": "section_zhaoliqiao_yanglousi_right_up",
+        "type": "TRAIN_NUM",
+        "left": 1974,
+        "top": 107
     }
 ]
