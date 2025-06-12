@@ -9,6 +9,7 @@ import cv2
 from utils.window_capture import WindowCapture
 import sys
 from utils.write_result import write_to_excel
+import glob
 
 # 在文件顶部添加常量引用
 from module.consts import (
@@ -41,8 +42,8 @@ def recognize(img):
     return ""
 
 if __name__ == "__main__":
-    # 读取框信息
-    boxes = read_boxes_from_config(config.BOX_CONFIG_PATH)
+    # 自动读取config/boxes目录下所有json文件
+    boxes = read_boxes_from_config(glob.glob(config.BOX_CONFIG_PATHS, recursive=True))
     
     # 新增视频文件读取
     video_path = "resources/test_tdcs.mp4"  # 根据实际文件类型调整扩展名
@@ -58,13 +59,20 @@ if __name__ == "__main__":
         #     print(f"点击坐标: ({x}, {y})")
         global current_box, box_type_index
         if event == cv2.EVENT_LBUTTONDOWN:
+            # 使用当前类型索引对应的尺寸
+            type_sizes = [
+                (BOX_W_TRAIN_NUM, BOX_H_TRAIN_NUM),
+                (BOX_W_LIGHT, BOX_H_LIGHT),
+                (BOX_W_RAIL_LINE, BOX_H_RAIL_LINE)
+            ]
+            current_width, current_height = type_sizes[box_type_index]
+            
             current_box = {
                 "left": x,
                 "top": y,
-                "width": BOX_W_TRAIN_NUM,
-                "height": BOX_H_TRAIN_NUM
+                "width": current_width,
+                "height": current_height
             }
-            box_type_index = 0  # 重置为初始类型
     cv2.setMouseCallback("Window with Boxes", mouse_callback)
     
     while cap.isOpened():

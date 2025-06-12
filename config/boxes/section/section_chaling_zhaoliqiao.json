@@ -1,0 +1,74 @@
+[
+    {
+        "name": "section_chaling_zhaoliqiao_left_down",
+        "type": "TRAIN_NUM",
+        "left": 1130,
+        "top": 161
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_right_down",
+        "type": "TRAIN_NUM",
+        "left": 1254,
+        "top": 161
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_left_up",
+        "type": "TRAIN_NUM",
+        "left": 1130,
+        "top": 107
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_right_up",
+        "type": "TRAIN_NUM",
+        "left": 1254,
+        "top": 107
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_1_1",
+        "type": "RAIL_LINE",
+        "left": 1183,
+        "top": 130
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_1_2",
+        "type": "RAIL_LINE",
+        "left": 1205,
+        "top": 130
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_1_3",
+        "type": "RAIL_LINE",
+        "left": 1254,
+        "top": 130
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_1",
+        "type": "RAIL_LINE",
+        "left": 1151,
+        "top": 148
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_2",
+        "type": "RAIL_LINE",
+        "left": 1180,
+        "top": 148
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_3",
+        "type": "RAIL_LINE",
+        "left": 1207,
+        "top": 148
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_4",
+        "type": "RAIL_LINE",
+        "left": 1235,
+        "top": 148
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_5",
+        "type": "RAIL_LINE",
+        "left": 1310,
+        "top": 148
+    }
+]

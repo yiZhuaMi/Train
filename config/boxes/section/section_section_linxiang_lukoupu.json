@@ -1,0 +1,26 @@
+[
+    {
+        "name": "section_linxiang_lukoupu_left_down",
+        "type": "TRAIN_NUM",
+        "left": 2511,
+        "top": 161
+    },
+    {
+        "name": "section_linxiang_lukoupu_left_up",
+        "type": "TRAIN_NUM",
+        "left": 2511,
+        "top": 107
+    },
+    {
+        "name": "section_linxiang_lukoupu_right_down",
+        "type": "TRAIN_NUM",
+        "left": 2620,
+        "top": 161
+    },
+    {
+        "name": "section_linxiang_lukoupu_right_up",
+        "type": "TRAIN_NUM",
+        "left": 2620,
+        "top": 107
+    }
+]

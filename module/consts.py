@@ -18,14 +18,14 @@ class ReduceTimes(Enum):
 
 BOX_W_TRAIN_NUM = 90
 BOX_H_TRAIN_NUM = 18
-BOX_W_LIGHT = 15
-BOX_H_LIGHT = 15
-BOX_W_RAIL_LINE = 6
-BOX_H_RAIL_LINE = 6
+BOX_W_LIGHT = 5
+BOX_H_LIGHT = 5
+BOX_W_RAIL_LINE = 4
+BOX_H_RAIL_LINE = 4
 
 # 框属性定义
 BOX_COLOR = "#00f6ff" #十六进制颜色
-BOX_WIDTH = 2
+BOX_WIDTH = 1
 
 # 信号灯颜色
 class LightColor(Enum):

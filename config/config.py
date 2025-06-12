@@ -1,6 +1,6 @@
 from module import consts
 # box配置文件路径
-BOX_CONFIG_PATH = "config/boxes.json"
+BOX_CONFIG_PATHS = "config/boxes/**/*.json"
 
 # 检测结果文件路径
 RESULT_PATH = "output/result.xlsx"

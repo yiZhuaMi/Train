@@ -90,37 +90,39 @@ class Box:
         height = _get_scaled_len(box_height)
         return height
 
-def read_boxes_from_config(config_path):
+def read_boxes_from_config(config_paths):
     """
-    从配置文件中读取识别框的配置信息，并返回一个包含Box对象的列表。
+    从多个配置文件中读取识别框的配置信息，并返回合并后的Box对象列表
     """
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            boxes_data = json.load(f)
-        boxes = []
-        for box_data in boxes_data:
-            # 将配置文件中的类型字符串转换为对应的枚举值
-            if box_data["type"] == "TEST":
-                box_type = consts.TargetType.TEST
-            elif box_data["type"] == "TRAIN_NUM":
-                box_type = consts.TargetType.TRAIN_NUM
-            elif box_data["type"] == "LIGHT":
-                box_type = consts.TargetType.LIGHT
-            elif box_data["type"] == "RAIL_LINE":
-                box_type = consts.TargetType.RAIL_LINE
-            else:
-                print(f"未知的框类型: {box_data['type']}，跳过该框")
-                continue
-            # 创建 Box 对象并添加到列表中
-            box = Box(box_data["name"], 
-                      box_type,
-                      _get_scaled_cordi(box_data["left"], config.BOX_OFFSET_left, config.BOX_ORIGIN_LEFT),
-                      _get_scaled_cordi(box_data["top"], config.BOX_OFFSET_top, config.BOX_ORIGIN_TOP))
-            boxes.append(box)
-        return boxes
-    except FileNotFoundError:
-        print(f"错误: 未找到配置文件 {config_path}")
-        return []
-    except json.JSONDecodeError:
-        print(f"错误: 配置文件 {config_path} 不是有效的 JSON 格式")
-        return []
+    boxes = []
+    # 如果是单个路径则转为列表
+    config_paths = [config_paths] if isinstance(config_paths, str) else config_paths
+    
+    for config_path in config_paths:
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                boxes_data = json.load(f)
+            for box_data in boxes_data:
+                # 将配置文件中的类型字符串转换为对应的枚举值
+                if box_data["type"] == "TEST":
+                    box_type = consts.TargetType.TEST
+                elif box_data["type"] == "TRAIN_NUM":
+                    box_type = consts.TargetType.TRAIN_NUM
+                elif box_data["type"] == "LIGHT":
+                    box_type = consts.TargetType.LIGHT
+                elif box_data["type"] == "RAIL_LINE":
+                    box_type = consts.TargetType.RAIL_LINE
+                else:
+                    print(f"未知的框类型: {box_data['type']}，跳过该框")
+                    continue
+                # 创建 Box 对象并添加到列表中
+                box = Box(box_data["name"], 
+                          box_type,
+                          _get_scaled_cordi(box_data["left"], config.BOX_OFFSET_left, config.BOX_ORIGIN_LEFT),
+                          _get_scaled_cordi(box_data["top"], config.BOX_OFFSET_top, config.BOX_ORIGIN_TOP))
+                boxes.append(box)
+        except FileNotFoundError:
+            print(f"警告: 未找到配置文件 {config_path}，已跳过")
+        except json.JSONDecodeError:
+            print(f"警告: 配置文件 {config_path} 格式错误，已跳过")
+    return boxes

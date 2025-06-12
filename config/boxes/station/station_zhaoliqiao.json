@@ -1,0 +1,50 @@
+[
+    {
+        "name": "station_zhaoliqiao_1_out_right",
+        "type": "LIGHT",
+        "left": 1543,
+        "top": 125
+    },
+    {
+        "name": "station_zhaoliqiao_1_out_left",
+        "type": "LIGHT",
+        "left": 1441,
+        "top": 134
+    },
+    {
+        "name": "station_zhaoliqiao_2_out_right",
+        "type": "LIGHT",
+        "left": 1540,
+        "top": 142
+    },
+    {
+        "name": "station_zhaoliqiao_2_out_left",
+        "type": "LIGHT",
+        "left": 1438,
+        "top": 152
+    },
+    {
+        "name": "station_zhaoliqiao_1_in_left",
+        "type": "LIGHT",
+        "left": 1324,
+        "top": 125
+    },
+    {
+        "name": "station_zhaoliqiao_2_in_left",
+        "type": "LIGHT",
+        "left": 1325,
+        "top": 152
+    },
+    {
+        "name": "station_zhaoliqiao_1_in_right",
+        "type": "LIGHT",
+        "left": 1609,
+        "top": 125
+    },
+    {
+        "name": "station_zhaoliqiao_2_in_right",
+        "type": "LIGHT",
+        "left": 1609,
+        "top": 152
+    }
+]
