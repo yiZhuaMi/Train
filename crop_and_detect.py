@@ -82,7 +82,8 @@ if __name__ == "__main__":
             
         # 裁剪出黑底
         if frame is not None:
-            frame = frame[80:960, 10:4500]  # numpy切片格式 [y_start:y_end, x_start:x_end]
+            frame = frame[config.TOP_START:config.TOP_END, 
+                          config.LEFT_START:config.LEFT_END]
 
         frame_count += 1  # 更新帧计数
         # print(frame_count)
@@ -95,15 +96,15 @@ if __name__ == "__main__":
             for cropped_img in cropped_images:
                 if cropped_img.image.size == 0:
                     continue
-                # 识别
-                result = recognize(cropped_img)
-                # 将结果存入 frame_result 字典
-                frame_result[cropped_img.box.name] = {
-                    "result_text":result,
-                    "image":cropped_img.image
-                    }
+            #     # 识别
+            #     result = recognize(cropped_img)
+            #     # 将结果存入 frame_result 字典
+            #     frame_result[cropped_img.box.name] = {
+            #         "result_text":result,
+            #         "image":cropped_img.image
+            #         }
 
-            # print("当前帧的识别结果:", frame_result)
+            # # print("当前帧的识别结果:", frame_result)
             # write_to_excel(config.RESULT_PATH, frame_result)
 
             #------------------------------------帧加工----------------------------------------

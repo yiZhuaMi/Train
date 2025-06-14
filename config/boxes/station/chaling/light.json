@@ -1,0 +1,164 @@
+[
+    {
+        "name": "station_chaling_1_in_left",
+        "type": "LIGHT",
+        "left": 793,
+        "top": 125
+    },
+    {
+        "name": "station_chaling_2_in_right",
+        "type": "LIGHT",
+        "left": 1135,
+        "top": 153
+    },
+    {
+        "name": "station_chaling_x1",
+        "type": "LIGHT",
+        "left": 1049,
+        "top": 125
+    },
+    {
+        "name": "station_chaling_x2",
+        "type": "LIGHT",
+        "left": 1045,
+        "top": 142
+    },
+    {
+        "name": "station_chaling_x3",
+        "type": "LIGHT",
+        "left": 1045,
+        "top": 107
+    },
+    {
+        "name": "station_chaling_x4",
+        "type": "LIGHT",
+        "left": 1045,
+        "top": 159
+    },
+    {
+        "name": "station_chaling_s1",
+        "type": "LIGHT",
+        "left": 874,
+        "top": 134
+    },
+    {
+        "name": "station_chaling_s2",
+        "type": "LIGHT",
+        "left": 871,
+        "top": 152
+    },
+    {
+        "name": "station_chaling_s3",
+        "type": "LIGHT",
+        "left": 874,
+        "top": 117
+    },
+    {
+        "name": "station_chaling_s4",
+        "type": "LIGHT",
+        "left": 874,
+        "top": 170
+    },
+    {
+        "name": "station_chaling_d2",
+        "type": "LIGHT",
+        "left": 1115,
+        "top": 153
+    },
+    {
+        "name": "station_chaling_d4",
+        "type": "LIGHT",
+        "left": 1115,
+        "top": 135
+    },
+    {
+        "name": "station_chaling_d6",
+        "type": "LIGHT",
+        "left": 1099,
+        "top": 117
+    },
+    {
+        "name": "station_chaling_d8",
+        "type": "LIGHT",
+        "left": 1082,
+        "top": 134
+    },
+    {
+        "name": "station_chaling_d10",
+        "type": "LIGHT",
+        "left": 1054,
+        "top": 90
+    },
+    {
+        "name": "station_chaling_d12",
+        "type": "LIGHT",
+        "left": 1054,
+        "top": 72
+    },
+    {
+        "name": "station_chaling_d14",
+        "type": "LIGHT",
+        "left": 1025,
+        "top": 100
+    },
+    {
+        "name": "station_chaling_d16",
+        "type": "LIGHT",
+        "left": 1025,
+        "top": 82
+    },
+    {
+        "name": "station_chaling_d18",
+        "type": "LIGHT",
+        "left": 1008,
+        "top": 117
+    },
+    {
+        "name": "station_chaling_d20",
+        "type": "LIGHT",
+        "left": 975,
+        "top": 107
+    },
+    {
+        "name": "station_chaling_d22",
+        "type": "LIGHT",
+        "left": 971,
+        "top": 89
+    },
+    {
+        "name": "station_chaling_d1",
+        "type": "LIGHT",
+        "left": 811,
+        "top": 124
+    },
+    {
+        "name": "station_chaling_d3",
+        "type": "LIGHT",
+        "left": 811,
+        "top": 141
+    },
+    {
+        "name": "station_chaling_d5",
+        "type": "LIGHT",
+        "left": 846,
+        "top": 142
+    },
+    {
+        "name": "station_chaling_d7",
+        "type": "LIGHT",
+        "left": 901,
+        "top": 107
+    },
+    {
+        "name": "station_chaling_d9",
+        "type": "LIGHT",
+        "left": 916,
+        "top": 117
+    },
+    {
+        "name": "station_chaling_d11",
+        "type": "LIGHT",
+        "left": 924,
+        "top": 100
+    }
+]

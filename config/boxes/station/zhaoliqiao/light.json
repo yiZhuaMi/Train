@@ -30,18 +30,6 @@
         "top": 125
     },
     {
-        "name": "station_zhaoliqiao_2_in_left",
-        "type": "LIGHT",
-        "left": 1325,
-        "top": 152
-    },
-    {
-        "name": "station_zhaoliqiao_1_in_right",
-        "type": "LIGHT",
-        "left": 1609,
-        "top": 125
-    },
-    {
         "name": "station_zhaoliqiao_2_in_right",
         "type": "LIGHT",
         "left": 1609,

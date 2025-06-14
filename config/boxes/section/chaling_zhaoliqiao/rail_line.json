@@ -1,29 +1,5 @@
 [
     {
-        "name": "section_chaling_zhaoliqiao_left_down",
-        "type": "TRAIN_NUM",
-        "left": 1130,
-        "top": 161
-    },
-    {
-        "name": "section_chaling_zhaoliqiao_right_down",
-        "type": "TRAIN_NUM",
-        "left": 1254,
-        "top": 161
-    },
-    {
-        "name": "section_chaling_zhaoliqiao_left_up",
-        "type": "TRAIN_NUM",
-        "left": 1130,
-        "top": 107
-    },
-    {
-        "name": "section_chaling_zhaoliqiao_right_up",
-        "type": "TRAIN_NUM",
-        "left": 1254,
-        "top": 107
-    },
-    {
         "name": "section_chaling_zhaoliqiao_1_1",
         "type": "RAIL_LINE",
         "left": 1183,
@@ -38,35 +14,59 @@
     {
         "name": "section_chaling_zhaoliqiao_1_3",
         "type": "RAIL_LINE",
+        "left": 1227,
+        "top": 130
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_1_4",
+        "type": "RAIL_LINE",
         "left": 1254,
         "top": 130
     },
     {
-        "name": "section_chaling_zhaoliqiao_2_1",
+        "name": "section_chaling_zhaoliqiao_1_5",
+        "type": "RAIL_LINE",
+        "left": 1282,
+        "top": 130
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_1_6",
+        "type": "RAIL_LINE",
+        "left": 1311,
+        "top": 130
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_6",
         "type": "RAIL_LINE",
         "left": 1151,
         "top": 148
     },
     {
-        "name": "section_chaling_zhaoliqiao_2_2",
+        "name": "section_chaling_zhaoliqiao_2_5",
         "type": "RAIL_LINE",
         "left": 1180,
         "top": 148
     },
     {
-        "name": "section_chaling_zhaoliqiao_2_3",
+        "name": "section_chaling_zhaoliqiao_2_4",
         "type": "RAIL_LINE",
         "left": 1207,
         "top": 148
     },
     {
-        "name": "section_chaling_zhaoliqiao_2_4",
+        "name": "section_chaling_zhaoliqiao_2_3",
         "type": "RAIL_LINE",
         "left": 1235,
         "top": 148
     },
     {
-        "name": "section_chaling_zhaoliqiao_2_5",
+        "name": "section_chaling_zhaoliqiao_2_2",
+        "type": "RAIL_LINE",
+        "left": 1277,
+        "top": 148
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_2_1",
         "type": "RAIL_LINE",
         "left": 1310,
         "top": 148

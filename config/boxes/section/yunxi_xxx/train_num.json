@@ -1,12 +1,12 @@
 [
     {
-        "name": "section_yunxi_left_down",
+        "name": "section_yunxi_xxx_right_down",
         "type": "TRAIN_NUM",
         "left": 3854,
         "top": 161
     },
     {
-        "name": "section_yunxi_left_up",
+        "name": "section_yunxi_xxx_left_up",
         "type": "TRAIN_NUM",
         "left": 3854,
         "top": 107

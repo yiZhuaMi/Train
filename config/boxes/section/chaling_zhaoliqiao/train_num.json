@@ -1,0 +1,14 @@
+[
+    {
+        "name": "section_chaling_zhaoliqiao_right_down",
+        "type": "TRAIN_NUM",
+        "left": 1254,
+        "top": 161
+    },
+    {
+        "name": "section_chaling_zhaoliqiao_left_up",
+        "type": "TRAIN_NUM",
+        "left": 1130,
+        "top": 107
+    }
+]

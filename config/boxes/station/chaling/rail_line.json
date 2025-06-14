@@ -1,0 +1,248 @@
+[
+    {
+        "name": "station_chaling_1ag",
+        "type": "RAIL_LINE",
+        "left": 805,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_2ag",
+        "type": "RAIL_LINE",
+        "left": 805,
+        "top": 148
+    },
+    {
+        "name": "station_chaling_dc1_normal",
+        "type": "RAIL_LINE",
+        "left": 822,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_dc1_reverse",
+        "type": "RAIL_LINE",
+        "left": 822,
+        "top": 135
+    },
+    {
+        "name": "station_chaling_dc3_normal",
+        "type": "RAIL_LINE",
+        "left": 830,
+        "top": 148
+    },
+    {
+        "name": "station_chaling_dc3_reverse",
+        "type": "RAIL_LINE",
+        "left": 830,
+        "top": 143
+    },
+    {
+        "name": "station_chaling_dc5_reverse",
+        "type": "RAIL_LINE",
+        "left": 822,
+        "top": 143
+    },
+    {
+        "name": "station_chaling_dc7_reverse",
+        "type": "RAIL_LINE",
+        "left": 830,
+        "top": 135
+    },
+    {
+        "name": "station_chaling_dc9_normal",
+        "type": "RAIL_LINE",
+        "left": 863,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_dc9_reverse",
+        "type": "RAIL_LINE",
+        "left": 863,
+        "top": 118
+    },
+    {
+        "name": "station_chaling_dc11_normal",
+        "type": "RAIL_LINE",
+        "left": 863,
+        "top": 148
+    },
+    {
+        "name": "station_chaling_dc11_reverse",
+        "type": "RAIL_LINE",
+        "left": 863,
+        "top": 158
+    },
+    {
+        "name": "station_chaling_9/13wg",
+        "type": "RAIL_LINE",
+        "left": 888,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_dc13_normal",
+        "type": "RAIL_LINE",
+        "left": 911,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_dc13_reverse",
+        "type": "RAIL_LINE",
+        "left": 915,
+        "top": 102
+    },
+    {
+        "name": "station_chaling_1g",
+        "type": "RAIL_LINE",
+        "left": 949,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_2g",
+        "type": "RAIL_LINE",
+        "left": 949,
+        "top": 148
+    },
+    {
+        "name": "station_chaling_3g",
+        "type": "RAIL_LINE",
+        "left": 949,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_4g",
+        "type": "RAIL_LINE",
+        "left": 949,
+        "top": 165
+    },
+    {
+        "name": "station_chaling_5g",
+        "type": "RAIL_LINE",
+        "left": 949,
+        "top": 95
+    },
+    {
+        "name": "station_chaling_dc20_normal",
+        "type": "RAIL_LINE",
+        "left": 991,
+        "top": 107
+    },
+    {
+        "name": "station_chaling_dc20_reverse",
+        "type": "RAIL_LINE",
+        "left": 991,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_dc22_normal",
+        "type": "RAIL_LINE",
+        "left": 985,
+        "top": 95
+    },
+    {
+        "name": "station_chaling_dc22_reverse",
+        "type": "RAIL_LINE",
+        "left": 985,
+        "top": 101
+    },
+    {
+        "name": "station_chaling_16/20wg",
+        "type": "RAIL_LINE",
+        "left": 1036,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_dc14_normal",
+        "type": "RAIL_LINE",
+        "left": 1066,
+        "top": 123
+    },
+    {
+        "name": "station_chaling_dc14_reverse",
+        "type": "RAIL_LINE",
+        "left": 1067,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_dc16_normal",
+        "type": "RAIL_LINE",
+        "left": 1063,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_dc16_reverse",
+        "type": "RAIL_LINE",
+        "left": 1062,
+        "top": 119
+    },
+    {
+        "name": "station_chaling_dc12_normal",
+        "type": "RAIL_LINE",
+        "left": 1071,
+        "top": 148
+    },
+    {
+        "name": "station_chaling_dc12_reverse",
+        "type": "RAIL_LINE",
+        "left": 1071,
+        "top": 153
+    },
+    {
+        "name": "station_chaling_dc10_normal",
+        "type": "RAIL_LINE",
+        "left": 1086,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_dc8_normal",
+        "type": "RAIL_LINE",
+        "left": 1098,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_dc8_reverse",
+        "type": "RAIL_LINE",
+        "left": 1098,
+        "top": 135
+    },
+    {
+        "name": "station_chaling_dc6_normal",
+        "type": "RAIL_LINE",
+        "left": 1105,
+        "top": 148
+    },
+    {
+        "name": "station_chaling_dc6_reverse",
+        "type": "RAIL_LINE",
+        "left": 1105,
+        "top": 142
+    },
+    {
+        "name": "station_chaling_dc4_reverse",
+        "type": "RAIL_LINE",
+        "left": 1098,
+        "top": 143
+    },
+    {
+        "name": "station_chaling_dc2_reverse",
+        "type": "RAIL_LINE",
+        "left": 1106,
+        "top": 135
+    },
+    {
+        "name": "station_chaling_d6g",
+        "type": "RAIL_LINE",
+        "left": 1120,
+        "top": 113
+    },
+    {
+        "name": "station_chaling_1bg",
+        "type": "RAIL_LINE",
+        "left": 1132,
+        "top": 130
+    },
+    {
+        "name": "station_chaling_2bg",
+        "type": "RAIL_LINE",
+        "left": 1132,
+        "top": 148
+    }
+]

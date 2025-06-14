@@ -5,6 +5,12 @@ BOX_CONFIG_PATHS = "config/boxes/**/*.json"
 # 检测结果文件路径
 RESULT_PATH = "output/result.xlsx"
 
+# TDCS画面裁剪区域
+TOP_START = 80 #决定原点
+TOP_END = 960
+LEFT_START = 10 #决定原点
+LEFT_END = 4500
+
 # 要捕获的窗口标题
 #Mac下
 CAPTURE_MAC_WINDOW_NAME =  "桌面控制 152 576 447 9"

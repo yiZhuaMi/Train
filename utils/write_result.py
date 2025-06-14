@@ -2,6 +2,8 @@ import openpyxl
 from config import config
 from module.box import read_boxes_from_config
 import cv2
+import glob
+
 def write_to_excel(file_path, frame_result):
     """
     将数据和图像写入 Excel 文件，支持直接在表格中查看图像
@@ -29,7 +31,7 @@ def write_to_excel(file_path, frame_result):
         # 创建固定表头
         headers = ["时间"]
         # 按配置顺序生成列名（与boxes.json配置顺序一致）
-        for box in read_boxes_from_config(config.BOX_CONFIG_PATH):
+        for box in read_boxes_from_config(glob.glob(config.BOX_CONFIG_PATHS, recursive=True)):
             headers.append(f"{box.name}_图片")
             headers.append(f"{box.name}_结果")
         ws.append(headers)

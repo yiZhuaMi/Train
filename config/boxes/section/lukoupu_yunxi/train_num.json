@@ -1,0 +1,14 @@
+[
+    {
+        "name": "section_lukoupu_yunxi_left_up",
+        "type": "TRAIN_NUM",
+        "left": 3271,
+        "top": 107
+    },
+    {
+        "name": "section_lukoupu_yunxi_right_down",
+        "type": "TRAIN_NUM",
+        "left": 3354,
+        "top": 157
+    }
+]

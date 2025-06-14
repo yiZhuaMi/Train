@@ -1,11 +1,5 @@
 [
     {
-        "name": "section_zhaoliqiao_linxiang_left_down",
-        "type": "TRAIN_NUM",
-        "left": 1602,
-        "top": 161
-    },
-    {
         "name": "section_zhaoliqiao_linxiang_left_up",
         "type": "TRAIN_NUM",
         "left": 1602,
@@ -16,11 +10,5 @@
         "type": "TRAIN_NUM",
         "left": 1974,
         "top": 161
-    },
-    {
-        "name": "section_zhaoliqiao_linxiang_right_up",
-        "type": "TRAIN_NUM",
-        "left": 1974,
-        "top": 107
     }
 ]
