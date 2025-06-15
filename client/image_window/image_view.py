@@ -25,6 +25,17 @@ class ImageView(QGraphicsView):
         self.controller = controller
     
     def display_image(self, pixmap: QPixmap):
+
+        view_height = self.viewport().height()
+        scaled_pixmap = pixmap.scaledToHeight(
+            view_height,
+            Qt.TransformationMode.SmoothTransformation
+        )
+        self.pixmap_item.setPixmap(scaled_pixmap)
+        self.setSceneRect(self.pixmap_item.boundingRect())
+
+        self.horizontalScrollBar().setValue(self.horizontalScrollBar().minimum())
+
         self.pixmap_item.setPixmap(pixmap)
         self.setSceneRect(QRectF(pixmap.rect()))
         if not self._keep_zoom:

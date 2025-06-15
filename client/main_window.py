@@ -11,7 +11,7 @@ import sys
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, folder_path: str):
+    def __init__(self, video_path: str):
         super().__init__()
         from image_window.image_controller import image_controller
         from warning_window.warning_window_controller import warning_window_controller
@@ -45,30 +45,31 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(h_container)
 
-        self.image_folder = folder_path
-        self.image_files = [f for f in os.listdir(folder_path)
-                            if f.lower().endswith((".png", ".jpg", ".jpeg", ".bmp"))]
-        self.image_files.sort()  # 可选：按文件名排序
-        self.current_index = 0
+        self.video_cap = cv2.VideoCapture(video_path)
+        if self.video_cap.isOpened:
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self._show_next_image)
+            self.timer.start(1000)
 
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self._show_next_image)
-        self.timer.start(1000)
+        self.index = 0
 
     def _show_next_image(self):
-        if not self.image_files:
+        if not self.video_cap.isOpened:
             return
 
-        image_path = os.path.join(self.image_folder, self.image_files[self.current_index])
-        cv_image = cv2.imread(image_path)
-        image_annotated = AnnotatedImage(cv_image)
+        ret, frame = self.video_cap.read()
+        if not ret:
+            self.video_cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            self.index = 0
+
+        image_annotated = AnnotatedImage(frame)
         image_annotated.add_rect_annotations([RectAnnotation(500, 350, 50, 50)])
         image_annotated.add_circle_annotations([CircleAnnotation(1000, 1000, 10)])
         image_annotated.add_cross_annotations([CrossAnnotation(1200, 800, 10)])
         self._image_controller.load_annotated_image(image_annotated)
 
-        self.current_index = (self.current_index + 1) % len(self.image_files)
-        self._warning_window_controller.append_warning(image_path)
+        self._warning_window_controller.append_warning(f"读取到了视频第{self.index}帧")
+        self.index += 1
 
     def run(self):
         self.show()
@@ -79,7 +80,7 @@ class MainWindow(QMainWindow):
 def client_main():
     app = QApplication(sys.argv)
 
-    window = MainWindow("./images_for_test")
+    window = MainWindow("./images_for_test/video.mp4")
     window.run()
 
     sys.exit(app.exec())
