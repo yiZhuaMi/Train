@@ -10,3 +10,4 @@ utils/*cpoy.py
 cap copy.py
 Dockerfile
 requirements.txt
+.vscode
